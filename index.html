@@ -1,126 +1,429 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/><title>Puneeth R</title><meta name="description" content="Java Software Engineer with 4+ years in backend development, fintech APIs, microservices, and full-stack delivery."/><link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22 width=%22100%22 height=%22100%22><text y=%220.9em%22 font-size=%2290%22>💻</text></svg>"><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/><script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-<style>
-:root{--bg:#f8fafc;--bg2:#ffffff;--surface:#f1f5f9;--primary:#0f172a;--accent:#0284c7;--accent-light:#e0f2fe;--text:#334155;--muted:#64748b;--border:#e2e8f0;--card-bg:#ffffff;--success:#16a34a;--success-light:#dcfce7;--font-head:'Plus Jakarta Sans',sans-serif;--font-body:'Inter',sans-serif;}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:16px;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
-#bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.6;}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem clamp(1rem,5vw,5rem);}
-.nav-inner{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:1200px;margin:0 auto;background:rgba(255,255,255,0.8);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:100px;padding:0.5rem 1rem 0.5rem 1.5rem;box-shadow:0 4px 30px rgba(15,23,42,0.03);}
-.nav-logo{font-family:var(--font-head);font-size:clamp(15px,4vw,18px);font-weight:800;color:var(--primary);letter-spacing:-0.5px;white-space:nowrap;}
-.nav-logo em{color:var(--accent);font-style:normal;}.nav-links{display:flex;gap:max(1rem,2vw);align-items:center;}
-.nav-links a{color:var(--text);text-decoration:none;font-size:clamp(12px,3.5vw,14px);font-weight:500;transition:color 0.2s;position:relative;}
-.nav-links a:hover{color:var(--accent);}.nav-hire{background:var(--primary);color:#ffffff!important;padding:0.5rem 1rem;border-radius:100px;font-weight:600!important;transition:background-color 0.2s,transform 0.2s!important;box-shadow:0 4px 12px rgba(15,23,42,0.1);}
-.nav-hire:hover{background:var(--accent);transform:translateY(-1px);}.hero-section{position:relative;overflow:hidden;background:radial-gradient(140% 140% at 0% 0%,#e0f2fe 0%,#f8fafc 100%);}
-.hero{min-height:100vh;display:flex;align-items:center;padding:clamp(7rem,15vh,10rem) clamp(1rem,5vw,5rem) clamp(4rem,10vh,6rem);position:relative;z-index:2;max-width:1200px;margin:0 auto;}
-.hero-inner{width:100%;}.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:clamp(11px,3vw,13px);font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--accent);background:var(--accent-light);padding:6px 16px;border-radius:100px;margin-bottom:1.5rem;opacity:0;transform:translateY(16px);}
-.hero-eyebrow .live-dot{width:8px;height:8px;border-radius:50%;background:var(--success);box-shadow:0 0 0 4px rgba(22,163,74,0.2);animation:pulse 2s infinite;}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(22,163,74,0.4);}70%{box-shadow:0 0 0 8px rgba(22,163,74,0);}100%{box-shadow:0 0 0 0 rgba(22,163,74,0);}}
-.hero-headline{font-family:var(--font-head);font-size:clamp(2.2rem,7.5vw,5.5rem);font-weight:800;line-height:1.1;letter-spacing:-1.5px;color:var(--primary);margin-bottom:1.5rem;}
-.hero-headline .line{display:block;overflow:hidden;}.hero-headline .accent-word{color:var(--accent);}.hero-bottom{display:grid;grid-template-columns:1.2fr 1fr;gap:clamp(2rem,5vw,4rem);align-items:center;margin-top:2rem;}
-.term-card{background:var(--primary);border-radius:16px;overflow:hidden;box-shadow:0 20px 50px rgba(15,23,42,0.18);width:100%;}
-.term-bar{display:flex;gap:6px;padding:12px 16px;background:rgba(255,255,255,0.05);}
-.term-dot{width:10px;height:10px;border-radius:50%;}
-.term-body{padding:1.25rem 1.5rem 1.5rem;font-family:'Fira Code',monospace;font-size:13px;line-height:1.9;color:#e2e8f0;}
-.term-body .k{color:#7dd3fc;}.term-body .s{color:#86efac;}.term-body .c{color:#64748b;}
-.term-body .yrs{color:#fbbf24;font-weight:700;}
-.hero-desc{font-size:clamp(15px,4vw,18px);color:var(--text);line-height:1.7;max-width:540px;opacity:0;}.hero-desc strong{color:var(--primary);font-weight:600;}
-.hero-right{display:flex;flex-direction:column;align-items:flex-start;gap:2rem;opacity:0;width:100%;}.hero-stats{display:flex;gap:1.5rem;width:100%;justify-content:space-between;border-left:3px solid var(--accent);padding-left:1.5rem;flex-wrap:wrap;}
-.stat{flex:1;min-width:100px;}.stat-val{font-family:var(--font-head);font-size:clamp(1.8rem,5vw,2.5rem);font-weight:800;line-height:1;color:var(--primary);display:inline-block;}.stat-label{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-top:6px;}
-.hero-btns{display:flex;gap:1rem;margin-top:0.5rem;width:100%;flex-wrap:wrap;}.btn-mag{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:0.85rem 2rem;border-radius:100px;font-family:var(--font-body);font-size:15px;font-weight:600;text-decoration:none;transition:all 0.25s ease;flex:1;min-width:160px;white-space:nowrap;}
-.btn-mag-primary{background:var(--primary);color:white;box-shadow:0 4px 14px rgba(15,23,42,0.15);}.btn-mag-primary:hover{background:var(--accent);transform:translateY(-2px);box-shadow:0 6px 20px rgba(2,132,199,0.25);}
-.btn-mag-ghost{background:white;color:var(--primary);border:1px solid var(--border);box-shadow:0 2px 6px rgba(0,0,0,0.02);}.btn-mag-ghost:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px);}
-section{position:relative;z-index:2;}.container{max-width:1200px;margin:0 auto;padding:clamp(3.5rem,8vh,6rem) clamp(1rem,5vw,5rem);}.section-header{margin-bottom:clamp(2rem,5vh,3.5rem);}
-.project-section-subhead{font-family:var(--font-head);font-size:clamp(1.1rem,4vw,1.4rem);font-weight:700;color:var(--primary);margin:2.5rem 0 1.25rem;display:flex;align-items:center;gap:10px;}
-.project-section-subhead::after{content:'';flex:1;height:1px;background:var(--border);}.eyebrow{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:0.5rem;display:block;}
-.section-title{font-family:var(--font-head);font-size:clamp(1.8rem,5vw,2.75rem);font-weight:800;letter-spacing:-1px;color:var(--primary);}.section-title .dim{color:var(--muted);font-weight:400;}
-.about-section{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}.about-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:clamp(2rem,5vw,5rem);align-items:center;}
-.about-text{font-size:clamp(15px,3.5vw,17px);color:var(--text);line-height:1.8;}.about-text strong{color:var(--primary);font-weight:600;}.about-text p+p{margin-top:1.25rem;}.keyword-cloud{display:flex;flex-wrap:wrap;gap:8px;margin-top:2rem;}
-.kw{font-size:12px;font-weight:500;padding:6px 14px;border-radius:100px;border:1px solid var(--border);color:var(--primary);background:var(--bg);transition:all 0.2s;}
-.kw:hover{background:var(--accent-light);border-color:var(--accent);color:var(--accent);transform:translateY(-1px);}.about-right{display:flex;flex-direction:column;gap:1.25rem;width:100%;}
-.metric-card{border:1px solid var(--border);border-radius:16px;padding:clamp(1.25rem,4vw,1.75rem);background:var(--bg);box-shadow:0 4px 20px rgba(0,0,0,0.01);transition:all 0.25s ease;}
-.metric-card:hover{border-color:var(--accent);background:white;transform:scale(1.02);box-shadow:0 10px 30px rgba(15,23,42,0.04);}.mc-val{font-family:var(--font-head);font-size:clamp(2.2rem,6vw,2.75rem);color:var(--accent);line-height:1;margin-bottom:4px;}
-.mc-label{font-size:14px;font-weight:700;color:var(--primary);}.mc-desc{font-size:13px;color:var(--muted);margin-top:4px;}.skills-marquee-wrap{overflow:hidden;margin:2rem calc(-1*clamp(1rem,5vw,5rem)) 3rem;padding:1.25rem 0;background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
-.skills-marquee{display:flex;gap:1.5rem;width:max-content;animation:marquee 30s linear infinite;}.marquee-tag{white-space:nowrap;font-size:14px;font-weight:500;padding:8px 20px;border-radius:100px;border:1px solid var(--border);color:var(--text);background:var(--bg);}
-@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:2rem;}
-.skill-block{padding:1.75rem;background:var(--card-bg);border-radius:16px;border:1px solid var(--border);box-shadow:0 4px 20px rgba(0,0,0,0.01);transition:all 0.25s ease;}
-.skill-block:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,0.04);}.skill-cat{font-family:var(--font-head);font-size:15px;font-weight:700;color:var(--primary);margin-bottom:1.25rem;display:flex;align-items:center;gap:8px;}
-.skill-cat::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);}.skill-list{display:flex;flex-wrap:wrap;gap:6px;}.stag{font-size:12px;font-weight:500;padding:4px 10px;border-radius:6px;background:var(--bg);border:1px solid var(--border);color:var(--text);}
-.exp-section{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}.exp-cards{display:flex;flex-direction:column;gap:1.5rem;}
-.exp-card{border:1px solid var(--border);border-radius:16px;padding:clamp(1.5rem,4vw,2.5rem);background:var(--bg);transition:all 0.25s ease;}
-.exp-card:hover{border-color:var(--accent);background:white;box-shadow:0 10px 35px rgba(0,0,0,0.03);}.exp-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1rem;margin-bottom:1.25rem;}
-.exp-role{font-family:var(--font-head);font-size:clamp(1.25rem,4vw,1.5rem);font-weight:800;color:var(--primary);letter-spacing:-0.5px;}.exp-date{font-size:12px;font-weight:600;color:var(--accent);background:var(--accent-light);padding:4px 14px;border-radius:100px;white-space:nowrap;}
-.exp-company{color:var(--primary);font-size:15px;font-weight:600;margin-top:2px;}.exp-location{font-size:13px;color:var(--muted);}.exp-summary{font-size:clamp(14px,3.5vw,16px);color:var(--text);line-height:1.75;margin-top:0.5rem;}
-.exp-summary strong{color:var(--primary);font-weight:600;}.exp-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:1.5rem;}.exp-tag{font-size:12px;font-weight:500;padding:4px 10px;border-radius:6px;background:white;color:var(--primary);border:1px solid var(--border);}
-.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;}
-.project-card{border:1px solid var(--border);border-radius:16px;padding:clamp(1.5rem,4vw,2.25rem);background:var(--card-bg);transition:all 0.25s ease;display:flex;flex-direction:column;box-shadow:0 4px 20px rgba(0,0,0,0.01);}
-.project-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,0.04);}.project-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;}
-.project-icon-wrap{width:44px;height:44px;border-radius:10px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:20px;border:1px solid var(--border);}.pbadge{font-size:11px;font-weight:600;padding:4px 12px;border-radius:100px;}
-.pbadge-backend{background:#e0e7ff;color:#4338ca;}.pbadge-frontend{background:#fef3c7;color:#d97706;}.pbadge-wip{background:var(--success-light);color:var(--success);}
-.project-title{font-family:var(--font-head);font-size:1.25rem;font-weight:700;color:var(--primary);margin-bottom:0.5rem;}.project-desc{font-size:14px;color:var(--text);line-height:1.65;flex:1;margin-bottom:1.5rem;}
-.project-desc strong{color:var(--primary);font-weight:600;}.project-footer{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-top:auto;}
-.project-pills{display:flex;flex-wrap:wrap;gap:4px;max-width:70%;}.ppill{font-size:11px;font-weight:500;padding:2px 8px;border-radius:4px;background:var(--bg);color:var(--muted);border:1px solid var(--border);}
-.project-link-btn{display:inline-flex;align-items:center;gap:4px;font-size:13px;font-weight:600;color:var(--primary);text-decoration:none;border:1px solid var(--border);border-radius:100px;padding:5px 12px;transition:all 0.2s;white-space:nowrap;}
-.project-link-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light);}.cert-section{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
-.cert-card{border:1px solid var(--border);border-radius:16px;padding:1.5rem;background:var(--bg);display:flex;align-items:center;gap:1.25rem;max-width:650px;transition:all 0.25s ease;flex-wrap:wrap;}
-.cert-card:hover{border-color:var(--accent);background:white;transform:translateY(-2px);}.cert-icon-wrap{width:52px;height:52px;border-radius:12px;background:white;display:flex;align-items:center;justify-content:center;font-size:24px;border:1px solid var(--border);flex-shrink:0;}
-.cert-info{flex:1;min-width:200px;}.cert-name{font-family:var(--font-head);font-size:1.1rem;font-weight:700;color:var(--primary);}.cert-sub{font-size:13px;color:var(--muted);margin-top:2px;}
-.cert-badge-wip{font-size:11px;font-weight:600;padding:4px 12px;border-radius:100px;background:#fee2e2;color:#dc2626;white-space:nowrap;}
-.contact-big{font-family:var(--font-head);font-size:clamp(1.8rem,5vw,3.5rem);font-weight:800;color:var(--primary);letter-spacing:-1.5px;line-height:1.1;margin-bottom:1rem;}.contact-big em{color:var(--accent);font-style:normal;}
-.contact-sub{font-size:clamp(15px,3.5vw,17px);color:var(--text);max-width:550px;margin-bottom:2.5rem;}.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;max-width:750px;}
-.contact-card{display:flex;align-items:center;gap:1rem;padding:1.25rem;border-radius:14px;border:1px solid var(--border);background:var(--card-bg);text-decoration:none;color:var(--text);box-shadow:0 4px 15px rgba(0,0,0,0.01);transition:all 0.25s ease;}
-.contact-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,0,0,0.04);}.cc-icon{font-size:1.3rem;width:36px;height:36px;background:var(--bg);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.cc-info{flex:1;min-width:0;}.cc-label{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;}.cc-val{font-family:var(--font-head);font-weight:700;font-size:14px;color:var(--primary);margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.cc-arrow{margin-left:auto;color:var(--muted);font-size:16px;transition:all 0.2s;flex-shrink:0;}.contact-card:hover .cc-arrow{transform:translate(2px,-2px);color:var(--accent);}
-footer{border-top:1px solid var(--border);padding:2rem clamp(1rem,5vw,5rem);display:flex;justify-content:space-between;align-items:center;background:white;position:relative;z-index:2;flex-wrap:wrap;gap:1rem;}
-.footer-logo{font-family:var(--font-head);font-size:16px;font-weight:800;color:var(--primary);}.footer-logo em{color:var(--accent);font-style:normal;}.footer-copy{font-size:13px;color:var(--muted);}
-.reveal{opacity:0;transform:translateY(28px);will-change:opacity,transform;}.reveal-left{opacity:0;transform:translateX(-28px);will-change:opacity,transform;}.reveal-right{opacity:0;transform:translateX(28px);will-change:opacity,transform;}
-.hero-headline .word{display:inline-block;transform:translateY(110%);will-change:transform;}
-@media (max-width:960px){.hero-bottom{grid-template-columns:1fr;gap:2.5rem;}.about-grid{grid-template-columns:1fr;gap:2.5rem;}}
-@media (max-width:600px){.nav-inner{border-radius:24px;padding:0.5rem 1rem;}.nav-links{gap:0.75rem;}.nav-hire{display:none;}.cert-card{justify-content:center;text-align:center;}.cert-badge-wip{margin-left:0;margin-top:0.5rem;}}
-</style></head><body>
-<canvas id="bg-canvas"></canvas>
-<nav><div class="nav-inner"><div class="nav-logo">Puneeth <em>R</em></div><div class="nav-links"><a href="#about">About</a> <a href="#skills">Skills</a> <a href="#experience">Experience</a> <a href="#projects">Projects</a> <a href="#contact" class="nav-hire">Hire Me ↗</a></div></div></nav>
-<section class="hero-section"><div class="hero"><div class="hero-inner"><div class="hero-eyebrow"><span class="live-dot"></span> Actively Interviewing · Bangalore, India</div><h1 class="hero-headline"><span class="line"><span class="word">Software</span></span> <span class="line"><span class="word accent-word">Engineer</span></span></h1><div class="hero-bottom"><p class="hero-desc"><strong>4+ years</strong> of expertise in engineered business solutions, production-ready backend workflows, secure <strong>fintech APIs</strong>, and distributed infrastructure layers. Driven by execution and system efficiency.</p><div class="hero-right"><div class="term-card"><div class="term-bar"><span class="term-dot" style="background:#ff5f56"></span><span class="term-dot" style="background:#ffbd2e"></span><span class="term-dot" style="background:#27c93f"></span></div><div class="term-body">
-<span class="c">//profile</span><br>
-<span class="k">const</span> engineer = {<br>
-&nbsp;&nbsp;experience: <span class="yrs">'<span data-count="4">4</span>+ years'</span>,<br>
-&nbsp;&nbsp;stack: <span class="s">['Java', 'Spring Boot', 'Kafka', 'Angular']</span>,<br>
-&nbsp;&nbsp;focus: <span class="s">'fintech APIs'</span>,<br>
-&nbsp;&nbsp;status: <span class="s">'shipping'</span><br>
-};
-</div></div><div class="hero-btns"><a href="mailto:puneethr1954@gmail.com" class="btn-mag btn-mag-primary">Contact Directly ↗</a> <a href="https://github.com/puneethx47" target="_blank" class="btn-mag btn-mag-ghost">GitHub Profile ↗</a></div></div></div></div></div></section>
-<section id="about" class="about-section"><div class="container"><div class="section-header reveal"><span class="eyebrow">Profile Summary</span><h2 class="section-title">High-performance architecture, <span class="dim">delivered.</span></h2></div><div class="about-grid"><div class="reveal-left"><div class="about-text"><p>Results-driven Java Software Engineer offering <strong>4+ years of professional engineering depth</strong> across business backend lifecycles. Designed and owned high-throughput financial architectures, enterprise-tier core banking integration points, and highly operational **automated batch systems** targeting mission-critical data processing workflows.</p><p>Complemented with client-facing **Angular** ecosystem knowledge, prioritizing scalability, system instrumentation, clean documentation, and thorough structural database optimizations.</p></div><div class="keyword-cloud"><span class="kw">Java 8/11/17</span><span class="kw">Spring Boot</span><span class="kw">Microservices</span> <span class="kw">Apache Kafka</span><span class="kw">REST Architecture</span><span class="kw">MySQL Database</span> <span class="kw">Docker Containerization</span><span class="kw">Kubernetes Orchestration</span><span class="kw">Angular UI</span></div></div><div class="about-right reveal-right"><div class="metric-card"><div class="mc-val">↓</div><div class="mc-label">API Response Improvement</div><div class="mc-desc">Refactored server-side calculations and optimized REST contracts for efficient request processing.</div></div><div class="metric-card"><div class="mc-val">↑</div><div class="mc-label">SQL Query Performance Gain</div><div class="mc-desc">Introduced strategic composite indexes and fine-tuned transactional object-relational mapping patterns.</div></div><div class="metric-card"><div class="mc-val">3+</div><div class="mc-label">Enterprise-Grade Systems</div><div class="mc-desc">Successfully executed production deployments through reliable CI/CD release pipelines.</div></div></div></div></div></section>
-<section id="skills"><div class="container"><div class="section-header reveal"><span class="eyebrow">Technical Expertise</span><h2 class="section-title">Core Competencies</h2></div><div class="skills-marquee-wrap"><div class="skills-marquee"><span class="marquee-tag">Java Ecosystem</span><span class="marquee-tag">Spring Boot</span> <span class="marquee-tag">Microservices Architecture</span><span class="marquee-tag">Apache Kafka</span> <span class="marquee-tag">Docker Containerization</span><span class="marquee-tag">Kubernetes</span> <span class="marquee-tag">Angular UI Framework</span><span class="marquee-tag">RESTful API Design</span> <span class="marquee-tag">MySQL Optimization</span><span class="marquee-tag">Hibernate Core JPA</span> <span class="marquee-tag">Jenkins CI/CD Workflows</span><span class="marquee-tag">Unit Testing (JUnit)</span> <span class="marquee-tag">Java Ecosystem</span><span class="marquee-tag">Spring Boot</span> <span class="marquee-tag">Microservices Architecture</span><span class="marquee-tag">Apache Kafka</span> <span class="marquee-tag">Docker Containerization</span><span class="marquee-tag">Kubernetes</span></div></div><div class="skills-grid reveal"><div class="skill-block"><div class="skill-cat">Backend Engineering</div><div class="skill-list"><span class="stag">Java Core</span><span class="stag">Spring Boot</span> <span class="stag">Spring MVC</span><span class="stag">Hibernate JPA</span> <span class="stag">REST Endpoints</span><span class="stag">Batch Jobs</span></div></div><div class="skill-block"><div class="skill-cat">Distributed Frameworks</div><div class="skill-list"><span class="stag">Microservices</span><span class="stag">Apache Kafka</span> <span class="stag">Event Routing</span><span class="stag">DDD Foundations</span></div></div><div class="skill-block"><div class="skill-cat">Web & User Interface</div><div class="skill-list"><span class="stag">Angular</span><span class="stag">TypeScript</span> <span class="stag">JavaScript</span><span class="stag">HTML5 / CSS3</span></div></div><div class="skill-block"><div class="skill-cat">Database Performance</div><div class="skill-list"><span class="stag">MySQL</span><span class="stag">Index Tuning</span> <span class="stag">Schema Modeling</span><span class="stag">Query Audit</span></div></div><div class="skill-block"><div class="skill-cat">DevOps & Platforms</div><div class="skill-list"><span class="stag">Jenkins Pipeline</span><span class="stag">CI / CD Automation</span></div></div><div class="skill-block"><div class="skill-cat">Quality & Management</div><div class="skill-list"><span class="stag">JUnit Testing</span><span class="stag">Postman Tests</span> <span class="stag">Git Strategy</span><span class="stag">Agile Sprint</span></div></div></div></div></section>
-<section id="experience" class="exp-section"><div class="container"><div class="section-header reveal"><span class="eyebrow">Professional History</span><h2 class="section-title">Employment Timeline</h2></div><div class="exp-cards"><div class="exp-card reveal"><div class="exp-top"><div><div class="exp-role">Software Engineer</div><div class="exp-company">Sensei Technologies Pvt. Ltd.</div><div class="exp-location">Bangalore, India · Full-time</div></div><div class="exp-date">Jul 2022 — Present</div></div><div class="exp-summary">Spearheading production backend implementation layers for large-scale enterprise structures. Responsibilities center on microservices scalability, critical internal API stability, and comprehensive query diagnostics. Improved runtime API transactional processing and analytical query efficiency through targeted database tier index optimizations.</div><div class="exp-tags"><span class="exp-tag">Java Enterprise</span><span class="exp-tag">Spring Boot Framework</span> <span class="exp-tag">Microservices</span><span class="exp-tag">Angular Architecture</span> <span class="exp-tag">MySQL Server</span><span class="exp-tag">Agile Development</span></div></div><div class="exp-card reveal"><div class="exp-top"><div><div class="exp-role">Software Engineer Intern</div><div class="exp-company">Sensei Technologies Pvt. Ltd.</div><div class="exp-location">Bangalore, India · Internship</div></div><div class="exp-date">Mar 2022 — Jun 2022</div></div><div class="exp-summary">Acquired systematic knowledge regarding Object-Relational Mapping (ORM) design paradigms and database constraints. Designed reliable client screens using AngularJS integrated into downstream enterprise JSON endpoint architectures.</div><div class="exp-tags"><span class="exp-tag">Java Development</span><span class="exp-tag">AngularJS</span> <span class="exp-tag">REST Web Services</span><span class="exp-tag">Database Basics</span></div></div></div></div></section>
-<section id="projects"><div class="container"><div class="section-header reveal"><span class="eyebrow">Product Engineering</span><h2 class="section-title">Technical Projects</h2></div>
- 
-<div class="project-section-subhead reveal">Backend Projects</div>
-<div class="projects-grid">
-<div class="project-card"><div class="project-top"><div class="project-icon-wrap">⚡</div><span class="pbadge pbadge-backend">Systems Design</span></div><div class="project-title">LRU Cache with TTL</div><div class="project-desc">Thread-safe LRU Cache with TTL expiry, exposed as a Spring Boot REST API with an Angular frontend. Concurrency and systems design learning project.</div><div class="project-footer"><div class="project-pills"><span class="ppill">Spring Boot</span><span class="ppill">Concurrency</span><span class="ppill">Angular</span></div><a href="https://github.com/puneethx47/lru-cache" target="_blank" class="project-link-btn">Code Repository ↗</a></div></div>
-<div class="project-card"><div class="project-top"><div class="project-icon-wrap">🏦</div><span class="pbadge pbadge-wip">Active Track</span></div><div class="project-title">Banking Microservices Platform</div><div class="project-desc">Accounts, Cards, and Loans as independent Spring Boot services (DB-per-service, H2 for dev). WebClient for sync inter-service calls, Kafka for async event-driven flows (e.g. LoanApproved → Account credited). Deployed on Kubernetes (Docker, HPA, ConfigMaps/Secrets) with Resilience4j circuit breaker, retry, and timeout on inter-service calls.</div><div class="project-footer"><div class="project-pills"><span class="ppill">Kafka</span><span class="ppill">Kubernetes</span><span class="ppill">Resilience4j</span></div><a href="https://github.com/puneethx47/loan" target="_blank" class="project-link-btn">Code Repository ↗</a></div></div>
-</div>
- 
-<div class="project-section-subhead reveal" style="margin-top: 4rem;">Frontend Projects</div>
-<div class="projects-grid">
-<div class="project-card"><div class="project-top"><div class="project-icon-wrap">🎬</div><span class="pbadge pbadge-frontend">UI / Client Side</span></div><div class="project-title">Keanu Reeves API Web Application</div><div class="project-desc">Frontend application consuming REST APIs to visualize and organize cinematic data into an interactive interface.</div><div class="project-footer"><div class="project-pills"><span class="ppill">JavaScript</span><span class="ppill">REST Client</span></div><a href="https://github.com/puneethx47/whoa" target="_blank" class="project-link-btn">View Code ↗</a></div></div>
-<div class="project-card"><div class="project-top"><div class="project-icon-wrap">🖥️</div><span class="pbadge pbadge-frontend">UI / Client Side</span></div><div class="project-title">macOS Native-Style Calculator</div><div class="project-desc">Lightweight desktop-style calculator built with clean UI architecture and responsive design principles.</div><div class="project-footer"><div class="project-pills"><span class="ppill">CSS</span><span class="ppill">UI Design</span></div><a href="https://github.com/puneethx47/mac-basic-calculator" target="_blank" class="project-link-btn">View Code ↗</a></div></div>
-</div>
-</div></section>
-<section class="cert-section"><div class="container"><div class="section-header reveal"><span class="eyebrow">Professional Development</span><h2 class="section-title">Certifications</h2></div><div class="cert-card reveal"><div class="cert-icon-wrap">☁️</div><div class="cert-info"><div class="cert-name">Master Microservices with Spring Boot, Docker & Kubernetes</div><div class="cert-sub">Udemy</div></div></div></div></section>
-<section id="contact" class="container"><div class="contact-big reveal">Let's discuss open<br><em>engineering opportunities</em></div><p class="contact-sub reveal">Open to full-time technical placements, system consultation tracks, and distributed engineering initiatives. Expect clear follow-up within one business day.</p><div class="contact-grid"><a href="mailto:puneethr1954@gmail.com" class="contact-card reveal"><div class="cc-icon">✉️</div><div class="cc-info"><div class="cc-label">Personal Email</div><div class="cc-val">puneethr1954@gmail.com</div></div><div class="cc-arrow">↗</div></a> <a href="https://www.linkedin.com/in/puneethr47/" target="_blank" class="contact-card reveal"><div class="cc-icon">💼</div><div class="cc-info"><div class="cc-label">Professional Network</div><div class="cc-val">linkedin.com/in/puneethr47</div></div><div class="cc-arrow">↗</div></a> <a href="https://github.com/puneethx47" target="_blank" class="contact-card reveal"><div class="cc-icon">🐙</div><div class="cc-info"><div class="cc-label">Version Control</div><div class="cc-val">github.com/puneethx47</div></div><div class="cc-arrow">↗</div></a> <a href="tel:+919980729367" class="contact-card reveal"><div class="cc-icon">📱</div><div class="cc-info"><div class="cc-label">Mobile Line</div><div class="cc-val">+91 99807 29367</div></div><div class="cc-arrow">↗</div></a></div></section>
-<footer><div class="footer-logo">Puneeth <em>R</em></div><div class="footer-copy">© 2026 · Java Engineering Portfolio · Bangalore, India</div></footer>
-<script>
-const canvas=document.getElementById('bg-canvas');const ctx=canvas.getContext('2d');let W,H,particles=[];
-function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}resize();window.addEventListener('resize',resize);
-class Particle{constructor(){this.reset();}reset(){this.x=Math.random()*W;this.y=Math.random()*H;this.size=Math.random()*2+0.5;this.speedX=(Math.random()-0.5)*0.25;this.speedY=(Math.random()-0.5)*0.25;this.opacity=Math.random()*0.2+0.05;}update(){this.x+=this.speedX;this.y+=this.speedY;if(this.x<0||this.x>W||this.y<0||this.y>H)this.reset();}draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.size,0,Math.PI*2);ctx.fillStyle=`rgba(2, 132, 199, ${this.opacity})`;ctx.fill();}}
-for(let i=0;i<70;i++)particles.push(new Particle());
-function drawCanvas(){ctx.clearRect(0,0,W,H);particles.forEach(p=>{p.update();p.draw();});for(let i=0;i<particles.length;i++){for(let j=i+1;j<particles.length;j++){const dx=particles[i].x-particles[j].x;const dy=particles[i].y-particles[j].y;const dist=Math.sqrt(dx*dx+dy*dy);if(dist<120){ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.strokeStyle=`rgba(15, 23, 42, ${0.03*(1-dist/120)})`;ctx.lineWidth=0.5;ctx.stroke();}}}requestAnimationFrame(drawCanvas);}drawCanvas();
-gsap.registerPlugin(ScrollTrigger);
-gsap.set('.hero-eyebrow',{opacity:0,y:16});gsap.set('.hero-headline .word',{y:'110%'});gsap.set('.hero-desc',{opacity:0,y:20});gsap.set('.hero-right',{opacity:0,y:20});
-const tl=gsap.timeline({delay:0.1});tl.to('.hero-eyebrow',{opacity:1,y:0,duration:0.65,ease:'power3.out'}).to('.hero-headline .word',{y:0,duration:0.8,stagger:0.1,ease:'power4.out'},'-=0.3').to('.hero-desc',{opacity:1,y:0,duration:0.65,ease:'power2.out'},'-=0.4').to('.hero-right',{opacity:1,y:0,duration:0.65,ease:'power2.out'},'-=0.5');
-gsap.utils.toArray('.reveal').forEach((el,i)=>{gsap.fromTo(el,{opacity:0,y:28},{opacity:1,y:0,duration:0.7,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 88%',toggleActions:"play none none reverse"}});});
-gsap.utils.toArray('.reveal-left').forEach(el=>{gsap.fromTo(el,{opacity:0,x:-28},{opacity:1,x:0,duration:0.75,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 88%',toggleActions:"play none none reverse"}});});
-gsap.utils.toArray('.reveal-right').forEach(el=>{gsap.fromTo(el,{opacity:0,x:28},{opacity:1,x:0,duration:0.75,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 88%',toggleActions:"play none none reverse"}});});
-gsap.fromTo('.skill-block',{opacity:0,y:22},{opacity:1,y:0,duration:0.5,ease:'power2.out',stagger:{amount:0.35,from:'start'},scrollTrigger:{trigger:'.skills-grid',start:'top 85%',toggleActions:"play none none reverse"}});
-gsap.utils.toArray('.project-card').forEach((el,i)=>{gsap.fromTo(el,{opacity:0,y:24},{opacity:1,y:0,duration:0.55,delay:(i%2)*0.08,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 92%',toggleActions:"play none none reverse"}});});
-</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#171813">
+  <meta name="description" content="Puneeth R is a software engineer in Bangalore building dependable Java, Spring Boot, microservices, and fintech systems.">
+  <meta name="author" content="Puneeth R">
+  <meta name="robots" content="index, follow">
+  <title>Puneeth R — Software Engineer</title>
+
+  <!-- Update this canonical URL if the portfolio moves to a different deployment domain. -->
+  <link rel="canonical" href="https://puneethx47.github.io/portfolio/">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Puneeth R — Software Engineer">
+  <meta property="og:description" content="Backend engineering for fintech, enterprise workflows, and distributed systems.">
+  <meta property="og:url" content="https://puneethx47.github.io/portfolio/">
+  <meta property="og:image" content="https://puneethx47.github.io/portfolio/og.png">
+  <meta property="og:image:alt" content="Puneeth R, software engineer — backend systems built for the real world">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Puneeth R — Software Engineer">
+  <meta name="twitter:description" content="Backend engineering for fintech, enterprise workflows, and distributed systems.">
+  <meta name="twitter:image" content="https://puneethx47.github.io/portfolio/og.png">
+
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header" data-header>
+    <nav class="nav-shell" aria-label="Primary navigation">
+      <a class="brand" href="#top" aria-label="Puneeth R — back to top">
+        <span class="brand-mark" aria-hidden="true">PR</span>
+        <span class="brand-name">Puneeth R</span>
+      </a>
+
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Open navigation menu" data-menu-toggle>
+        <span></span><span></span>
+      </button>
+
+      <div class="nav-menu" id="nav-menu" data-nav-menu>
+        <div class="nav-links">
+          <a href="#about" data-nav-link>About</a>
+          <a href="#skills" data-nav-link>Expertise</a>
+          <a href="#experience" data-nav-link>Experience</a>
+          <a href="#projects" data-nav-link>Projects</a>
+        </div>
+        <a class="nav-cta" href="#contact" data-nav-link>Start a conversation <span aria-hidden="true">↗</span></a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero-grid" aria-hidden="true"></div>
+      <div class="hero-orbit hero-orbit-one" aria-hidden="true"></div>
+      <div class="hero-orbit hero-orbit-two" aria-hidden="true"></div>
+
+      <div class="hero-shell">
+        <div class="hero-copy">
+          <div class="hero-kicker" data-hero-item>
+            <span>Puneeth R</span>
+            <span class="kicker-divider" aria-hidden="true"></span>
+            <span>Software Engineer</span>
+          </div>
+
+          <h1 class="hero-title" id="hero-title">
+            <span class="title-line"><span>Backend systems</span></span>
+            <span class="title-line title-line-accent"><span>built for the real world.</span></span>
+          </h1>
+
+          <p class="hero-intro" data-hero-item>I build dependable backend software for fintech and enterprise workflows—using Java, Spring Boot, microservices, and a full-stack view of how software reaches people.</p>
+
+          <div class="hero-actions" data-hero-item>
+            <a class="button button-primary magnetic" href="#projects">Explore selected work <span aria-hidden="true">↓</span></a>
+            <a class="text-link" href="https://github.com/puneethx47" target="_blank" rel="noopener noreferrer">GitHub profile <span aria-hidden="true">↗</span></a>
+          </div>
+
+          <div class="hero-meta" data-hero-item>
+            <div>
+              <span class="meta-label">Based in</span>
+              <span class="meta-value">Bangalore, India</span>
+            </div>
+            <div>
+              <span class="meta-label">Experience</span>
+              <span class="meta-value">4+ years</span>
+            </div>
+            <div>
+              <span class="meta-label">Current status</span>
+              <span class="meta-value status-value"><i aria-hidden="true"></i> Actively interviewing</span>
+            </div>
+          </div>
+        </div>
+
+        <figure class="system-map" aria-labelledby="system-map-title" data-system-map>
+          <figcaption class="system-map-header">
+            <span class="diagram-index">SYSTEM / 01</span>
+            <span id="system-map-title">Request-to-event flow</span>
+            <span class="diagram-live"><i aria-hidden="true"></i> Available</span>
+          </figcaption>
+
+          <div class="system-stage">
+            <div class="flow-line flow-line-a" aria-hidden="true"><span></span></div>
+            <div class="flow-line flow-line-b" aria-hidden="true"><span></span></div>
+            <div class="flow-line flow-line-c" aria-hidden="true"><span></span></div>
+
+            <div class="system-node node-client">
+              <span class="node-number">01</span>
+              <strong>Request</strong>
+              <small>REST / JSON</small>
+            </div>
+
+            <div class="system-node node-core">
+              <span class="node-number">02</span>
+              <span class="core-glyph" aria-hidden="true"><i></i><i></i><i></i></span>
+              <strong>Service core</strong>
+              <small>Java / Spring Boot</small>
+            </div>
+
+            <div class="system-node node-event">
+              <span class="node-number">03</span>
+              <strong>Event stream</strong>
+              <small>Apache Kafka</small>
+            </div>
+
+            <div class="system-node node-data">
+              <span class="node-number">04</span>
+              <strong>Persistence</strong>
+              <small>MySQL / JPA</small>
+            </div>
+
+            <div class="system-note note-contract"><span>contract</span><b>validated</b></div>
+            <div class="system-note note-state"><span>state</span><b>consistent</b></div>
+          </div>
+
+          <div class="system-map-footer">
+            <span><i>01</i> Explicit contracts</span>
+            <span><i>02</i> Observable flow</span>
+            <span><i>03</i> Durable state</span>
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section about" id="about" aria-labelledby="about-title">
+      <div class="section-shell">
+        <div class="section-heading" data-reveal>
+          <p class="section-label">01 / Profile</p>
+          <h2 id="about-title">Engineering with context,<br><span>not just code.</span></h2>
+        </div>
+
+        <div class="about-layout">
+          <div class="about-statement" data-reveal>
+            <p>I'm a Java software engineer with 4+ years of experience delivering backend services, fintech APIs, automated batch workflows, and enterprise integrations at Sensei Technologies.</p>
+            <p>My core work sits in Java and Spring Boot. Experience with Angular and delivery pipelines helps me reason across the full path—from a user action to the service, database, and release that support it.</p>
+          </div>
+
+          <div class="principles" aria-label="Engineering principles">
+            <article class="principle" data-reveal>
+              <span class="principle-number">01</span>
+              <div><h3>Make contracts clear</h3><p>APIs and service boundaries should make behavior easy to understand, test, and change.</p></div>
+            </article>
+            <article class="principle" data-reveal>
+              <span class="principle-number">02</span>
+              <div><h3>Treat data as a design decision</h3><p>Schema choices, query paths, indexing, and ORM behavior shape the system users experience.</p></div>
+            </article>
+            <article class="principle" data-reveal>
+              <span class="principle-number">03</span>
+              <div><h3>Design for the failure path</h3><p>Reliable systems account for timeouts, retries, service boundaries, and operational clarity.</p></div>
+            </article>
+          </div>
+        </div>
+
+        <div class="focus-rail" data-reveal>
+          <span class="focus-label">Current focus</span>
+          <span>Backend API design</span>
+          <span>Event-driven workflows</span>
+          <span>Database performance</span>
+          <span>Production delivery</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section expertise" id="skills" aria-labelledby="skills-title">
+      <div class="section-shell">
+        <div class="section-heading heading-split" data-reveal>
+          <div>
+            <p class="section-label">02 / Expertise</p>
+            <h2 id="skills-title">A practical systems toolkit.</h2>
+          </div>
+          <p>Organized around the work each technology enables—not a wall of keywords.</p>
+        </div>
+
+        <div class="expertise-grid">
+          <article class="expertise-group expertise-primary" data-reveal>
+            <div class="expertise-top"><span>01</span><h3>Backend systems</h3></div>
+            <p>Service design, application logic, and production-ready REST workflows.</p>
+            <ul><li>Java 8 / 11 / 17</li><li>Spring Boot &amp; Spring MVC</li><li>Hibernate / JPA</li><li>REST API design</li><li>Batch jobs</li></ul>
+          </article>
+
+          <article class="expertise-group" data-reveal>
+            <div class="expertise-top"><span>02</span><h3>Distributed architecture</h3></div>
+            <p>Service boundaries and communication patterns for decoupled systems.</p>
+            <ul><li>Microservices</li><li>Apache Kafka</li><li>Event routing</li><li>Resilience4j</li><li>WebClient</li></ul>
+          </article>
+
+          <article class="expertise-group" data-reveal>
+            <div class="expertise-top"><span>03</span><h3>Data &amp; persistence</h3></div>
+            <p>Relational modeling and query behavior considered as part of application design.</p>
+            <ul><li>MySQL</li><li>Schema modeling</li><li>Index tuning</li><li>Query analysis</li><li>ORM patterns</li></ul>
+          </article>
+
+          <article class="expertise-group" data-reveal>
+            <div class="expertise-top"><span>04</span><h3>Frontend delivery</h3></div>
+            <p>Enough client-side depth to connect product interactions to backend behavior.</p>
+            <ul><li>Angular</li><li>AngularJS</li><li>TypeScript</li><li>JavaScript</li><li>HTML &amp; CSS</li></ul>
+          </article>
+
+          <article class="expertise-group" data-reveal>
+            <div class="expertise-top"><span>05</span><h3>Platforms &amp; delivery</h3></div>
+            <p>Container and pipeline fundamentals for repeatable application delivery.</p>
+            <ul><li>Docker</li><li>Kubernetes</li><li>Jenkins</li><li>CI/CD workflows</li><li>Git</li></ul>
+          </article>
+
+          <article class="expertise-group" data-reveal>
+            <div class="expertise-top"><span>06</span><h3>Quality practices</h3></div>
+            <p>Feedback loops that keep changes deliberate and behavior verifiable.</p>
+            <ul><li>JUnit</li><li>Postman</li><li>API testing</li><li>Agile delivery</li><li>Technical documentation</li></ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section experience" id="experience" aria-labelledby="experience-title">
+      <div class="section-shell experience-layout">
+        <div class="experience-intro" data-reveal>
+          <p class="section-label">03 / Experience</p>
+          <h2 id="experience-title">Built in production.<br><span>Refined through delivery.</span></h2>
+          <p>My professional path has developed within one engineering organization—from internship foundations to owning production backend work.</p>
+        </div>
+
+        <div class="timeline">
+          <article class="timeline-entry" data-reveal>
+            <div class="timeline-marker" aria-hidden="true"><span></span></div>
+            <div class="role-meta">
+              <span class="role-date">Jul 2022 — Present</span>
+              <span>Bangalore, India · Full-time</span>
+            </div>
+            <h3>Software Engineer</h3>
+            <p class="company">Sensei Technologies Pvt. Ltd.</p>
+            <p class="role-summary">Building and supporting production backend services for enterprise systems, with a focus on microservice scalability, internal API stability, and database performance.</p>
+            <ul class="role-details">
+              <li>Implemented backend workflows and integrations in Java and Spring Boot.</li>
+              <li>Diagnosed request and query paths, improving them through server-side refactoring and targeted database indexes.</li>
+              <li>Contributed across Angular interfaces, MySQL persistence, and CI/CD release workflows.</li>
+            </ul>
+            <div class="role-stack"><span>Java</span><span>Spring Boot</span><span>Microservices</span><span>Angular</span><span>MySQL</span></div>
+          </article>
+
+          <article class="timeline-entry timeline-entry-past" data-reveal>
+            <div class="timeline-marker" aria-hidden="true"><span></span></div>
+            <div class="role-meta">
+              <span class="role-date">Mar 2022 — Jun 2022</span>
+              <span>Bangalore, India · Internship</span>
+            </div>
+            <h3>Software Engineer Intern</h3>
+            <p class="company">Sensei Technologies Pvt. Ltd.</p>
+            <p class="role-summary">Built a foundation in Java application development, object-relational mapping, database constraints, and client-to-service integration.</p>
+            <ul class="role-details">
+              <li>Worked with ORM patterns and relational database fundamentals.</li>
+              <li>Developed AngularJS screens connected to REST web services and JSON responses.</li>
+            </ul>
+            <div class="role-stack"><span>Java</span><span>AngularJS</span><span>REST</span><span>Databases</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section projects" id="projects" aria-labelledby="projects-title">
+      <div class="section-shell">
+        <div class="section-heading projects-heading" data-reveal>
+          <p class="section-label">04 / Selected work</p>
+          <h2 id="projects-title">Systems explored in code.</h2>
+          <p>Projects built to make architecture, concurrency, and service behavior tangible.</p>
+        </div>
+
+        <article class="case-study case-study-banking" data-reveal>
+          <div class="case-copy">
+            <div class="case-eyebrow"><span>Featured system</span><span class="status-chip">In progress</span></div>
+            <h3>Banking Microservices Platform</h3>
+            <p class="case-lede">A modular banking system that separates accounts, cards, and loans into independent Spring Boot services, each with its own development database.</p>
+
+            <dl class="case-facts">
+              <div><dt>Architecture</dt><dd>Database per service, synchronous WebClient calls, and Kafka-based asynchronous flows.</dd></div>
+              <div><dt>Reliability</dt><dd>Resilience4j circuit breaker, retry, and timeout behavior between services.</dd></div>
+              <div><dt>Runtime</dt><dd>Docker and Kubernetes with HPA, ConfigMaps, and Secrets.</dd></div>
+            </dl>
+
+            <div class="case-footer">
+              <div class="tech-row"><span>Spring Boot</span><span>Kafka</span><span>Kubernetes</span><span>Resilience4j</span></div>
+              <a class="project-link" href="https://github.com/puneethx47/loan" target="_blank" rel="noopener noreferrer" aria-label="View the Banking Microservices Platform source code on GitHub">View repository <span aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+
+          <figure class="banking-diagram" aria-labelledby="banking-diagram-title">
+            <figcaption id="banking-diagram-title"><span>ARCHITECTURE / LOAN FLOW</span><span>LoanApproved → account credited</span></figcaption>
+            <div class="bank-stage">
+              <div class="bank-services">
+                <div class="bank-service"><span>01</span><strong>Accounts</strong><small>Spring Boot</small><i>H2</i></div>
+                <div class="bank-service service-active"><span>02</span><strong>Loans</strong><small>Spring Boot</small><i>H2</i></div>
+                <div class="bank-service"><span>03</span><strong>Cards</strong><small>Spring Boot</small><i>H2</i></div>
+              </div>
+              <div class="event-bus">
+                <span class="event-label">KAFKA EVENT STREAM</span>
+                <span class="event-packet" aria-hidden="true"></span>
+                <span class="event-name">LoanApproved</span>
+              </div>
+              <div class="runtime-layer">
+                <span>KUBERNETES RUNTIME</span>
+                <div><i>HPA</i><i>ConfigMaps</i><i>Secrets</i><i>Docker</i></div>
+              </div>
+            </div>
+          </figure>
+        </article>
+
+        <article class="case-study case-study-cache" data-reveal>
+          <figure class="cache-diagram" aria-labelledby="cache-diagram-title">
+            <figcaption id="cache-diagram-title"><span>CACHE / READ PATH</span><span>Thread-safe access with TTL expiry</span></figcaption>
+            <div class="cache-stage">
+              <div class="cache-request"><span>GET /cache/:key</span><i aria-hidden="true">→</i></div>
+              <div class="cache-core">
+                <div class="cache-ring" aria-hidden="true"><span></span></div>
+                <strong>LRU</strong><small>least recently used</small>
+              </div>
+              <div class="cache-results">
+                <span><i class="result-dot hit"></i> Valid entry <b>HIT</b></span>
+                <span><i class="result-dot miss"></i> Expired / absent <b>EVICT</b></span>
+              </div>
+              <div class="ttl-rail"><span>TTL WINDOW</span><i></i><b>expiry check</b></div>
+            </div>
+          </figure>
+
+          <div class="case-copy">
+            <div class="case-eyebrow"><span>Systems design study</span><span class="status-chip status-neutral">Learning project</span></div>
+            <h3>LRU Cache with TTL</h3>
+            <p class="case-lede">A thread-safe least-recently-used cache with time-based expiry, exposed through a Spring Boot REST API and paired with an Angular interface.</p>
+            <dl class="case-facts case-facts-compact">
+              <div><dt>Purpose</dt><dd>Explore concurrency, cache eviction, and expiration behavior through a working service.</dd></div>
+              <div><dt>Delivery</dt><dd>REST endpoints make cache behavior inspectable from the Angular client.</dd></div>
+            </dl>
+            <div class="case-footer">
+              <div class="tech-row"><span>Spring Boot</span><span>Concurrency</span><span>Angular</span></div>
+              <a class="project-link" href="https://github.com/puneethx47/lru-cache" target="_blank" rel="noopener noreferrer" aria-label="View the LRU Cache with TTL source code on GitHub">View repository <span aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+        </article>
+
+        <div class="supporting-projects" data-reveal>
+          <div class="supporting-heading"><p class="section-label">Frontend studies</p><p>Smaller interface projects exploring API consumption and responsive UI behavior.</p></div>
+
+          <a class="supporting-project" href="https://github.com/puneethx47/whoa" target="_blank" rel="noopener noreferrer" aria-label="View the Keanu Reeves API Web Application source code on GitHub">
+            <span class="supporting-number">01</span>
+            <span><strong>Keanu Reeves API Web Application</strong><small>JavaScript · REST client</small></span>
+            <p>Consumes REST data and organizes cinematic information into an interactive interface.</p>
+            <i aria-hidden="true">↗</i>
+          </a>
+
+          <a class="supporting-project" href="https://github.com/puneethx47/mac-basic-calculator" target="_blank" rel="noopener noreferrer" aria-label="View the macOS native-style calculator source code on GitHub">
+            <span class="supporting-number">02</span>
+            <span><strong>macOS Native-Style Calculator</strong><small>CSS · responsive UI</small></span>
+            <p>A lightweight calculator focused on clear visual hierarchy and responsive behavior.</p>
+            <i aria-hidden="true">↗</i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section credentials" aria-labelledby="credentials-title">
+      <div class="section-shell credentials-layout">
+        <div data-reveal>
+          <p class="section-label">05 / Continued learning</p>
+          <h2 id="credentials-title">Professional development.</h2>
+        </div>
+        <article class="credential" data-reveal>
+          <div class="credential-mark" aria-hidden="true"><span></span><i></i></div>
+          <div><p>Udemy</p><h3>Master Microservices with Spring Boot, Docker &amp; Kubernetes</h3></div>
+          <span class="credential-type">Certification</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="contact" id="contact" aria-labelledby="contact-title">
+      <div class="contact-grid-pattern" aria-hidden="true"></div>
+      <div class="section-shell contact-shell">
+        <div class="contact-copy" data-reveal>
+          <p class="section-label">06 / Contact</p>
+          <h2 id="contact-title">Let's build the part<br><span>that has to hold.</span></h2>
+          <p>I'm actively interviewing for software engineering roles where backend craft, reliable delivery, and thoughtful systems design matter.</p>
+          <a class="button button-accent magnetic" href="mailto:puneethr1954@gmail.com">Email Puneeth <span aria-hidden="true">↗</span></a>
+        </div>
+
+        <div class="contact-list" data-reveal>
+          <a href="mailto:puneethr1954@gmail.com"><span>Email</span><strong>puneethr1954@gmail.com</strong><i aria-hidden="true">↗</i></a>
+          <a href="https://www.linkedin.com/in/puneethr47/" target="_blank" rel="noopener noreferrer"><span>LinkedIn</span><strong>linkedin.com/in/puneethr47</strong><i aria-hidden="true">↗</i></a>
+          <a href="https://github.com/puneethx47" target="_blank" rel="noopener noreferrer"><span>GitHub</span><strong>github.com/puneethx47</strong><i aria-hidden="true">↗</i></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div>
+      <span class="brand-mark" aria-hidden="true">PR</span>
+      <span>Puneeth R · Software Engineer</span>
+    </div>
+    <p>© 2026 · Bangalore, India</p>
+    <a href="#top">Back to top <span aria-hidden="true">↑</span></a>
+  </footer>
+
+  <noscript><style>[data-reveal]{opacity:1!important;transform:none!important}</style></noscript>
+</body>
+</html>
