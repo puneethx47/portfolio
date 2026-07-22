@@ -32,6 +32,10 @@
   <script defer src="script.js"></script>
 </head>
 <body>
+  <div class="cursor" aria-hidden="true" data-cursor>
+    <span class="cursor-ring"></span>
+    <span class="cursor-dot"></span>
+  </div>
   <a class="skip-link" href="#main-content">Skip to main content</a>
 
   <header class="site-header" data-header>
@@ -290,45 +294,6 @@
           <h2 id="projects-title">Systems explored in code.</h2>
           <p>Projects built to make architecture, concurrency, and service behavior tangible.</p>
         </div>
-
-        <article class="case-study case-study-banking" data-reveal>
-          <div class="case-copy">
-            <div class="case-eyebrow"><span>Featured system</span><span class="status-chip">In progress</span></div>
-            <h3>Banking Microservices Platform</h3>
-            <p class="case-lede">A modular banking system that separates accounts, cards, and loans into independent Spring Boot services, each with its own development database.</p>
-
-            <dl class="case-facts">
-              <div><dt>Architecture</dt><dd>Database per service, synchronous WebClient calls, and Kafka-based asynchronous flows.</dd></div>
-              <div><dt>Reliability</dt><dd>Resilience4j circuit breaker, retry, and timeout behavior between services.</dd></div>
-              <div><dt>Runtime</dt><dd>Docker and Kubernetes with HPA, ConfigMaps, and Secrets.</dd></div>
-            </dl>
-
-            <div class="case-footer">
-              <div class="tech-row"><span>Spring Boot</span><span>Kafka</span><span>Kubernetes</span><span>Resilience4j</span></div>
-              <a class="project-link" href="https://github.com/puneethx47/loan" target="_blank" rel="noopener noreferrer" aria-label="View the Banking Microservices Platform source code on GitHub">View repository <span aria-hidden="true">↗</span></a>
-            </div>
-          </div>
-
-          <figure class="banking-diagram" aria-labelledby="banking-diagram-title">
-            <figcaption id="banking-diagram-title"><span>ARCHITECTURE / LOAN FLOW</span><span>LoanApproved → account credited</span></figcaption>
-            <div class="bank-stage">
-              <div class="bank-services">
-                <div class="bank-service"><span>01</span><strong>Accounts</strong><small>Spring Boot</small><i>H2</i></div>
-                <div class="bank-service service-active"><span>02</span><strong>Loans</strong><small>Spring Boot</small><i>H2</i></div>
-                <div class="bank-service"><span>03</span><strong>Cards</strong><small>Spring Boot</small><i>H2</i></div>
-              </div>
-              <div class="event-bus">
-                <span class="event-label">KAFKA EVENT STREAM</span>
-                <span class="event-packet" aria-hidden="true"></span>
-                <span class="event-name">LoanApproved</span>
-              </div>
-              <div class="runtime-layer">
-                <span>KUBERNETES RUNTIME</span>
-                <div><i>HPA</i><i>ConfigMaps</i><i>Secrets</i><i>Docker</i></div>
-              </div>
-            </div>
-          </figure>
-        </article>
 
         <article class="case-study case-study-cache" data-reveal>
           <figure class="cache-diagram" aria-labelledby="cache-diagram-title">

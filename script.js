@@ -85,14 +85,24 @@
   }
 
   function observeAnimation(element, animation) {
-    if (!element || !("IntersectionObserver" in window)) return;
+    if (!element) return;
 
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting && !document.hidden) animation.play();
+    let isVisible = true;
+    const syncPlayback = () => {
+      if (isVisible && !document.hidden) animation.play();
       else animation.pause();
-    }, { threshold: 0.08 });
+    };
 
-    observer.observe(element);
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver(([entry]) => {
+        isVisible = entry.isIntersecting;
+        syncPlayback();
+      }, { threshold: 0.08 });
+      observer.observe(element);
+    }
+
+    document.addEventListener("visibilitychange", syncPlayback);
+    syncPlayback();
   }
 
   function setupMotion() {
@@ -135,17 +145,6 @@
         observer.observe(element);
       };
 
-      observeAssembly(document.querySelector(".banking-diagram"), () => {
-        gsap.fromTo(".bank-service",
-          { opacity: 0, y: 18 },
-          { opacity: 1, y: 0, duration: 0.58, stagger: 0.1, ease: "power3.out", clearProps: "opacity,transform" }
-        );
-        gsap.fromTo(".runtime-layer",
-          { opacity: 0, y: 12 },
-          { opacity: 1, y: 0, duration: 0.55, delay: 0.24, ease: "power3.out", clearProps: "opacity,transform" }
-        );
-      });
-
       observeAssembly(document.querySelector(".cache-diagram"), () => {
         gsap.fromTo(".cache-core",
           { opacity: 0, scale: 0.76 },
@@ -156,7 +155,6 @@
 
     if (!finePointerQuery.matches || window.innerWidth <= 680) return;
 
-    const runningAnimations = [];
     document.querySelectorAll(".flow-line span").forEach((packet, index) => {
       const animation = gsap.to(packet, {
         x: () => Math.max(0, packet.parentElement.clientWidth - packet.clientWidth),
@@ -167,24 +165,8 @@
         ease: "none",
         paused: true
       });
-      runningAnimations.push(animation);
       observeAnimation(document.querySelector("[data-system-map]"), animation);
     });
-
-    const eventPacket = document.querySelector(".event-packet");
-    if (eventPacket) {
-      const eventAnimation = gsap.to(eventPacket, {
-        x: () => Math.max(0, eventPacket.parentElement.clientWidth - 100),
-        duration: 2.1,
-        repeat: -1,
-        repeatDelay: 0.8,
-        repeatRefresh: true,
-        ease: "power1.inOut",
-        paused: true
-      });
-      runningAnimations.push(eventAnimation);
-      observeAnimation(document.querySelector(".banking-diagram"), eventAnimation);
-    }
 
     const cacheRing = document.querySelector(".cache-ring");
     if (cacheRing) {
@@ -195,13 +177,8 @@
         ease: "none",
         paused: true
       });
-      runningAnimations.push(cacheAnimation);
       observeAnimation(document.querySelector(".cache-diagram"), cacheAnimation);
     }
-
-    document.addEventListener("visibilitychange", () => {
-      if (document.hidden) runningAnimations.forEach((animation) => animation.pause());
-    });
   }
 
   function setupMagneticButtons() {
@@ -225,8 +202,53 @@
     });
   }
 
+  function setupCursor() {
+    const cursor = document.querySelector("[data-cursor]");
+    if (!cursor || reducedMotionQuery.matches || !finePointerQuery.matches) return;
+
+    document.documentElement.classList.add("cursor-enabled");
+
+    let targetX = window.innerWidth / 2;
+    let targetY = window.innerHeight / 2;
+    let ringX = targetX;
+    let ringY = targetY;
+    let frameId = 0;
+
+    const render = () => {
+      ringX += (targetX - ringX) * 0.18;
+      ringY += (targetY - ringY) * 0.18;
+      cursor.style.setProperty("--cursor-x", `${targetX}px`);
+      cursor.style.setProperty("--cursor-y", `${targetY}px`);
+      cursor.style.setProperty("--ring-x", `${ringX}px`);
+      cursor.style.setProperty("--ring-y", `${ringY}px`);
+      frameId = window.requestAnimationFrame(render);
+    };
+
+    const setInteractiveState = (event) => {
+      const interactive = event.target.closest("a, button, [role='button'], input, textarea, select");
+      cursor.classList.toggle("is-interactive", Boolean(interactive));
+    };
+
+    window.addEventListener("pointermove", (event) => {
+      targetX = event.clientX;
+      targetY = event.clientY;
+      cursor.classList.add("is-visible");
+      setInteractiveState(event);
+    }, { passive: true });
+
+    document.addEventListener("pointerdown", () => cursor.classList.add("is-pressed"));
+    document.addEventListener("pointerup", () => cursor.classList.remove("is-pressed"));
+    document.documentElement.addEventListener("pointerleave", () => cursor.classList.remove("is-visible"));
+    document.documentElement.addEventListener("pointerenter", () => cursor.classList.add("is-visible"));
+    window.addEventListener("blur", () => cursor.classList.remove("is-visible"));
+
+    frameId = window.requestAnimationFrame(render);
+    window.addEventListener("pagehide", () => window.cancelAnimationFrame(frameId), { once: true });
+  }
+
   function init() {
     setupNavigation();
+    setupCursor();
 
     try {
       setupMotion();

@@ -78,6 +78,85 @@ svg {
   color: var(--white);
 }
 
+/* ------------------------------------------------------------
+   Pointer cursor
+   ------------------------------------------------------------ */
+.cursor {
+  display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cursor-enabled,
+  .cursor-enabled a,
+  .cursor-enabled button,
+  .cursor-enabled [role="button"] {
+    cursor: none;
+  }
+
+  .cursor {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: block;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 180ms ease;
+  }
+
+  .cursor.is-visible {
+    opacity: 1;
+  }
+
+  .cursor-dot,
+  .cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: block;
+    border-radius: 50%;
+    will-change: transform;
+  }
+
+  .cursor-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    box-shadow: 0 0 0 3px rgba(230, 83, 39, 0.12);
+    transform: translate3d(calc(var(--cursor-x) - 3px), calc(var(--cursor-y) - 3px), 0);
+    transition: width 220ms var(--ease), height 220ms var(--ease), background-color 220ms ease, transform 80ms linear;
+  }
+
+  .cursor-ring {
+    width: 34px;
+    height: 34px;
+    border: 1px solid rgba(230, 83, 39, 0.7);
+    transform: translate3d(calc(var(--ring-x) - 17px), calc(var(--ring-y) - 17px), 0);
+    transition: width 280ms var(--ease), height 280ms var(--ease), border-color 220ms ease, background-color 220ms ease, transform 80ms linear;
+  }
+
+  .cursor.is-interactive .cursor-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--white);
+    transform: translate3d(calc(var(--cursor-x) - 4px), calc(var(--cursor-y) - 4px), 0);
+  }
+
+  .cursor.is-interactive .cursor-ring {
+    width: 54px;
+    height: 54px;
+    background: rgba(230, 83, 39, 0.82);
+    border-color: transparent;
+    mix-blend-mode: difference;
+    transform: translate3d(calc(var(--ring-x) - 27px), calc(var(--ring-y) - 27px), 0);
+  }
+
+  .cursor.is-pressed .cursor-ring {
+    width: 27px;
+    height: 27px;
+    transform: translate3d(calc(var(--ring-x) - 13.5px), calc(var(--ring-y) - 13.5px), 0);
+  }
+}
+
 :focus-visible {
   outline: 3px solid var(--accent);
   outline-offset: 4px;
@@ -1298,8 +1377,7 @@ svg {
   color: var(--ink);
 }
 
-/* Banking diagram */
-.banking-diagram,
+/* Cache diagram */
 .cache-diagram {
   min-width: 0;
   margin: 0;
@@ -1307,7 +1385,6 @@ svg {
   color: var(--white);
 }
 
-.banking-diagram figcaption,
 .cache-diagram figcaption {
   min-height: 56px;
   display: flex;
@@ -1323,163 +1400,8 @@ svg {
   text-transform: uppercase;
 }
 
-.banking-diagram figcaption span:first-child,
 .cache-diagram figcaption span:first-child {
   color: var(--signal);
-}
-
-.bank-stage {
-  min-height: 590px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: clamp(2rem, 4.2vw, 4rem);
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-  background-size: 28px 28px;
-}
-
-.bank-services {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.8rem;
-}
-
-.bank-service {
-  position: relative;
-  min-height: 155px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 1.1rem;
-  background: var(--dark-soft);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-}
-
-.bank-service > span {
-  position: absolute;
-  top: 0.7rem;
-  right: 0.75rem;
-  color: rgba(255, 255, 255, 0.27);
-  font-family: var(--font-mono);
-  font-size: 0.55rem;
-}
-
-.bank-service strong {
-  font-size: 0.91rem;
-}
-
-.bank-service small {
-  margin-top: 0.25rem;
-  color: rgba(255, 255, 255, 0.42);
-  font-family: var(--font-mono);
-  font-size: 0.55rem;
-}
-
-.bank-service > i {
-  position: absolute;
-  right: 0.75rem;
-  bottom: 0.7rem;
-  padding: 0.22rem 0.4rem;
-  border: 1px solid rgba(255, 255, 255, 0.17);
-  color: rgba(255, 255, 255, 0.5);
-  font-family: var(--font-mono);
-  font-size: 0.48rem;
-  font-style: normal;
-}
-
-.service-active {
-  background: var(--accent);
-  border-color: rgba(255, 255, 255, 0.5);
-}
-
-.service-active small,
-.service-active > span,
-.service-active > i {
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.event-bus {
-  position: relative;
-  height: 82px;
-  display: flex;
-  align-items: center;
-  margin-block: 1.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.16);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
-}
-
-.event-bus::before {
-  content: "";
-  position: absolute;
-  right: 0;
-  left: 0;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.26);
-}
-
-.event-label,
-.event-name {
-  position: absolute;
-  z-index: 2;
-  padding: 0.3rem 0.5rem;
-  background: var(--dark);
-  font-family: var(--font-mono);
-  font-size: 0.52rem;
-  letter-spacing: 0.06em;
-}
-
-.event-label {
-  top: -0.75rem;
-  left: 0.8rem;
-  color: var(--signal);
-}
-
-.event-name {
-  right: 0.8rem;
-  bottom: -0.75rem;
-  color: rgba(255, 255, 255, 0.5);
-}
-
-.event-packet {
-  position: absolute;
-  z-index: 3;
-  left: 12%;
-  width: 10px;
-  height: 10px;
-  background: var(--signal);
-  box-shadow: 0 0 20px rgba(191, 218, 97, 0.75);
-}
-
-.runtime-layer {
-  padding: 1.25rem;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.13);
-}
-
-.runtime-layer > span {
-  color: rgba(255, 255, 255, 0.4);
-  font-family: var(--font-mono);
-  font-size: 0.53rem;
-  letter-spacing: 0.08em;
-}
-
-.runtime-layer > div {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0.45rem;
-  margin-top: 0.9rem;
-}
-
-.runtime-layer i {
-  padding: 0.55rem 0.4rem;
-  background: rgba(255, 255, 255, 0.05);
-  color: rgba(255, 255, 255, 0.6);
-  font-family: var(--font-mono);
-  font-size: 0.52rem;
-  font-style: normal;
-  text-align: center;
 }
 
 /* Cache diagram */
@@ -2113,7 +2035,6 @@ svg {
     padding: 3.5rem 0;
   }
 
-  .banking-diagram,
   .cache-diagram {
     min-height: auto;
   }
@@ -2332,44 +2253,11 @@ svg {
     gap: 0.35rem;
   }
 
-  .banking-diagram figcaption,
   .cache-diagram figcaption {
     align-items: flex-start;
     flex-direction: column;
     justify-content: center;
     min-height: 70px;
-  }
-
-  .bank-stage {
-    min-height: 560px;
-    padding: 1.3rem;
-  }
-
-  .bank-services {
-    gap: 0.4rem;
-  }
-
-  .bank-service {
-    min-height: 138px;
-    padding: 0.75rem;
-  }
-
-  .bank-service strong {
-    font-size: 0.71rem;
-  }
-
-  .bank-service small,
-  .bank-service > span {
-    font-size: 0.46rem;
-  }
-
-  .bank-service > i {
-    right: 0.5rem;
-    bottom: 0.5rem;
-  }
-
-  .runtime-layer > div {
-    grid-template-columns: repeat(2, 1fr);
   }
 
   .cache-stage {
@@ -2484,14 +2372,6 @@ svg {
     font-size: 0.72rem;
   }
 
-  .bank-service {
-    min-height: 126px;
-  }
-
-  .bank-service > i {
-    display: none;
-  }
-
   .cache-results {
     right: 12px;
     min-width: 164px;
@@ -2546,6 +2426,10 @@ svg {
   [data-system-map] {
     opacity: 1 !important;
     transform: none !important;
+  }
+
+  .cursor {
+    display: none !important;
   }
 }
 
