@@ -3,6 +3,7 @@
 
   const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
   const finePointerQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
+  const root = document.documentElement;
 
   function setupNavigation() {
     const header = document.querySelector("[data-header]");
@@ -106,100 +107,177 @@
   }
 
   function setupMotion() {
-    const gsap = window.gsap;
-    if (!gsap || reducedMotionQuery.matches) return;
+    if (reducedMotionQuery.matches) return;
 
-    const heroTimeline = gsap.timeline({ defaults: { ease: "power3.out" } });
-    heroTimeline
-      .from(".hero-kicker", { opacity: 0, y: 14, duration: 0.55 })
-      .from(".title-line > span", { yPercent: 112, rotate: 1.5, duration: 1.05, stagger: 0.1 }, "-=0.25")
-      .from(".hero-intro", { opacity: 0, y: 20, duration: 0.7 }, "-=0.56")
-      .from(".hero-actions", { opacity: 0, y: 16, duration: 0.6 }, "-=0.5")
-      .from(".hero-meta > div", { opacity: 0, y: 12, duration: 0.48, stagger: 0.08 }, "-=0.35")
-      .from("[data-system-map]", { opacity: 0, y: 24, scale: 0.985, duration: 0.9 }, "-=1.1")
-      .from(".system-node", { opacity: 0, scale: 0.9, duration: 0.5, stagger: 0.08 }, "-=0.56")
-      .from(".flow-line", { scaleX: 0, transformOrigin: "left", duration: 0.6, stagger: 0.08 }, "-=0.3")
-      .from(".system-note", { opacity: 0, y: 8, duration: 0.4, stagger: 0.08 }, "-=0.2");
+    root.classList.add("motion-ready");
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => root.classList.add("motion-entered"));
+    });
 
+    const revealElements = [...document.querySelectorAll("[data-reveal]")];
     if ("IntersectionObserver" in window) {
       const revealObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
-          gsap.fromTo(entry.target,
-            { opacity: 0, y: 28 },
-            { opacity: 1, y: 0, duration: 0.78, ease: "power3.out", clearProps: "opacity,transform" }
-          );
+          entry.target.classList.add("is-revealed");
           observer.unobserve(entry.target);
         });
       }, { rootMargin: "0px 0px -8%", threshold: 0.06 });
 
-      document.querySelectorAll("[data-reveal]").forEach((element) => revealObserver.observe(element));
+      revealElements.forEach((element) => revealObserver.observe(element));
+    } else revealElements.forEach((element) => element.classList.add("is-revealed"));
 
-      const observeAssembly = (element, animation) => {
-        if (!element) return;
-        const observer = new IntersectionObserver(([entry]) => {
-          if (!entry.isIntersecting) return;
-          animation();
-          observer.disconnect();
-        }, { rootMargin: "0px 0px -12%", threshold: 0.08 });
-        observer.observe(element);
-      };
-
-      observeAssembly(document.querySelector(".cache-diagram"), () => {
-        gsap.fromTo(".cache-core",
-          { opacity: 0, scale: 0.76 },
-          { opacity: 1, scale: 1, duration: 0.7, ease: "back.out(1.5)", clearProps: "opacity,transform" }
-        );
-      });
-    }
-
-    if (!finePointerQuery.matches || window.innerWidth <= 680) return;
+    if (!("animate" in Element.prototype)) return;
 
     document.querySelectorAll(".flow-line span").forEach((packet, index) => {
-      const animation = gsap.to(packet, {
-        x: () => Math.max(0, packet.parentElement.clientWidth - packet.clientWidth),
-        duration: 1.7 + index * 0.22,
-        repeat: -1,
-        repeatDelay: 0.45 + index * 0.2,
-        repeatRefresh: true,
-        ease: "none",
-        paused: true
+      const distance = Math.max(0, packet.parentElement.clientWidth - packet.clientWidth);
+      const animation = packet.animate([
+        { transform: "translateX(0)" },
+        { transform: `translateX(${distance}px)` }
+      ], {
+        duration: 1700 + index * 220,
+        iterations: Infinity,
+        easing: "linear"
       });
       observeAnimation(document.querySelector("[data-system-map]"), animation);
     });
 
     const cacheRing = document.querySelector(".cache-ring");
     if (cacheRing) {
-      const cacheAnimation = gsap.to(cacheRing, {
-        rotate: 360,
-        duration: 14,
-        repeat: -1,
-        ease: "none",
-        paused: true
+      const cacheAnimation = cacheRing.animate([
+        { transform: "rotate(0deg)" },
+        { transform: "rotate(360deg)" }
+      ], {
+        duration: 14000,
+        iterations: Infinity,
+        easing: "linear"
       });
       observeAnimation(document.querySelector(".cache-diagram"), cacheAnimation);
     }
   }
 
   function setupMagneticButtons() {
-    const gsap = window.gsap;
-    if (!gsap || reducedMotionQuery.matches || !finePointerQuery.matches) return;
+    if (reducedMotionQuery.matches || !finePointerQuery.matches) return;
 
     document.querySelectorAll(".magnetic").forEach((button) => {
-      const moveX = gsap.quickTo(button, "x", { duration: 0.45, ease: "power3.out" });
-      const moveY = gsap.quickTo(button, "y", { duration: 0.45, ease: "power3.out" });
-
       button.addEventListener("pointermove", (event) => {
         const bounds = button.getBoundingClientRect();
-        moveX((event.clientX - bounds.left - bounds.width / 2) * 0.14);
-        moveY((event.clientY - bounds.top - bounds.height / 2) * 0.18);
+        const x = (event.clientX - bounds.left - bounds.width / 2) * 0.14;
+        const y = (event.clientY - bounds.top - bounds.height / 2) * 0.18;
+        button.style.transform = `translate3d(${x}px, ${y}px, 0)`;
       });
 
       button.addEventListener("pointerleave", () => {
-        moveX(0);
-        moveY(0);
+        button.style.transform = "";
       });
     });
+  }
+
+  function setupResumeModal() {
+    const modal = document.querySelector("[data-resume-modal]");
+    const openers = [...document.querySelectorAll("[data-resume-open]")];
+    const closeButton = modal?.querySelector("[data-resume-close]");
+    const frame = modal?.querySelector("[data-resume-frame]");
+
+    if (!modal || !closeButton || !frame || typeof modal.showModal !== "function") return;
+
+    let returnFocus = null;
+    let closeTimer = 0;
+
+    const finishClose = () => {
+      window.clearTimeout(closeTimer);
+      modal.classList.remove("is-closing");
+      if (modal.open) modal.close();
+      document.body.classList.remove("resume-open");
+      returnFocus?.focus();
+      returnFocus = null;
+    };
+
+    const closeModal = () => {
+      if (!modal.open || modal.classList.contains("is-closing")) return;
+      modal.classList.add("is-closing");
+      modal.classList.remove("is-visible");
+      closeTimer = window.setTimeout(finishClose, reducedMotionQuery.matches ? 20 : 620);
+    };
+
+    const openModal = (opener) => {
+      window.clearTimeout(closeTimer);
+      returnFocus = opener;
+      if (!frame.getAttribute("src")) frame.src = frame.dataset.resumeSrc;
+      if (!modal.open) modal.showModal();
+      document.body.classList.add("resume-open");
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => modal.classList.add("is-visible"));
+      });
+      closeButton.focus();
+    };
+
+    openers.forEach((opener) => opener.addEventListener("click", (event) => {
+      event.preventDefault();
+      openModal(opener);
+    }));
+
+    frame.addEventListener("load", () => frame.classList.add("is-loaded"));
+    closeButton.addEventListener("click", closeModal);
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) closeModal();
+    });
+    modal.addEventListener("cancel", (event) => {
+      event.preventDefault();
+      closeModal();
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape" || !modal.open) return;
+      event.preventDefault();
+      closeModal();
+    });
+    modal.addEventListener("close", () => {
+      modal.classList.remove("is-visible", "is-closing");
+      document.body.classList.remove("resume-open");
+    });
+  }
+
+  async function setupVisitorCount() {
+    const output = document.querySelector("[data-visitor-count]");
+    if (!output) return;
+
+    const isLocalPreview = location.protocol === "file:" || ["localhost", "127.0.0.1", "::1"].includes(location.hostname);
+    if (isLocalPreview) {
+      output.textContent = "Live after publish";
+      output.classList.add("is-unavailable");
+      return;
+    }
+
+    const storageKey = "puneeth-portfolio-visitor-counted-v1";
+    let alreadyCounted = false;
+    try { alreadyCounted = localStorage.getItem(storageKey) === "true"; } catch (_) { /* Storage can be disabled. */ }
+
+    const action = alreadyCounted ? "" : "/up";
+    const controller = new AbortController();
+    const timeoutId = window.setTimeout(() => controller.abort(), 5000);
+
+    try {
+      const response = await fetch(`https://api.counterapi.dev/v1/puneethx47-portfolio/unique-visitors${action}`, {
+        mode: "cors",
+        cache: "no-store",
+        signal: controller.signal
+      });
+      if (!response.ok) throw new Error(`Counter returned ${response.status}`);
+      const data = await response.json();
+      const count = Number(data.count ?? data.value ?? data.data?.count ?? data.data?.value ?? data.Data?.count ?? data.Data?.value);
+      if (!Number.isFinite(count)) throw new Error("Counter response did not include a number");
+
+      output.textContent = new Intl.NumberFormat().format(count);
+      if (!alreadyCounted) {
+        try { localStorage.setItem(storageKey, "true"); } catch (_) { /* The count still succeeded. */ }
+      }
+    } catch (error) {
+      output.textContent = "Unavailable";
+      output.classList.add("is-unavailable");
+      console.warn("Visitor count could not be loaded.", error);
+    } finally {
+      window.clearTimeout(timeoutId);
+    }
   }
 
   function setupCursor() {
@@ -249,6 +327,8 @@
   function init() {
     setupNavigation();
     setupCursor();
+    setupResumeModal();
+    setupVisitorCount();
 
     try {
       setupMotion();

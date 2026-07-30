@@ -51,6 +51,10 @@ body.menu-open {
   overflow: hidden;
 }
 
+body.resume-open {
+  overflow: hidden;
+}
+
 button,
 a {
   -webkit-tap-highlight-color: transparent;
@@ -535,6 +539,22 @@ svg {
   box-shadow: 0 15px 38px rgba(230, 83, 39, 0.22);
 }
 
+.button-secondary {
+  background: transparent;
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.button-secondary:hover {
+  background: var(--ink);
+  color: var(--white);
+}
+
+.magnetic {
+  transition: color 220ms ease, background-color 220ms ease, border-color 220ms ease, box-shadow 220ms ease, transform 360ms var(--ease);
+  will-change: transform;
+}
+
 .text-link,
 .project-link {
   position: relative;
@@ -578,7 +598,7 @@ svg {
 
 .hero-meta {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1rem;
   margin-top: clamp(3.2rem, 6vw, 5.2rem);
   padding-top: 1.2rem;
@@ -621,6 +641,81 @@ svg {
   border-radius: 50%;
   box-shadow: 0 0 0 4px rgba(120, 150, 43, 0.12);
 }
+
+.visitor-value {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.visitor-value.is-unavailable {
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+
+/* Native CSS/WAAPI motion keeps the portfolio independent of third-party script CDNs. */
+.motion-ready [data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  transition: opacity 780ms var(--ease), transform 780ms var(--ease);
+}
+
+.motion-ready [data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+.motion-ready .hero-kicker,
+.motion-ready .hero-intro,
+.motion-ready .hero-actions,
+.motion-ready .hero-meta > div,
+.motion-ready [data-system-map],
+.motion-ready .system-node,
+.motion-ready .flow-line,
+.motion-ready .system-note,
+.motion-ready .title-line > span {
+  opacity: 0;
+}
+
+.motion-ready .hero-kicker,
+.motion-ready .hero-intro,
+.motion-ready .hero-actions,
+.motion-ready .hero-meta > div,
+.motion-ready [data-system-map],
+.motion-ready .system-note {
+  transform: translate3d(0, 18px, 0);
+}
+
+.motion-ready .title-line > span {
+  transform: translate3d(0, 112%, 0) rotate(1.5deg);
+}
+
+.motion-ready.motion-entered .hero-kicker,
+.motion-ready.motion-entered .hero-intro,
+.motion-ready.motion-entered .hero-actions,
+.motion-ready.motion-entered .hero-meta > div,
+.motion-ready.motion-entered [data-system-map],
+.motion-ready.motion-entered .system-note,
+.motion-ready.motion-entered .title-line > span {
+  opacity: 1;
+  transform: none;
+  transition: opacity 700ms var(--ease), transform 900ms var(--ease);
+}
+
+.motion-ready.motion-entered .system-node,
+.motion-ready.motion-entered .flow-line {
+  opacity: 1;
+  transition: opacity 700ms var(--ease);
+}
+
+.motion-ready.motion-entered .title-line:nth-child(1) > span { transition-delay: 100ms; }
+.motion-ready.motion-entered .title-line:nth-child(2) > span { transition-delay: 190ms; }
+.motion-ready.motion-entered .hero-intro { transition-delay: 290ms; }
+.motion-ready.motion-entered .hero-actions { transition-delay: 370ms; }
+.motion-ready.motion-entered .hero-meta > div { transition-delay: 440ms; }
+.motion-ready.motion-entered [data-system-map] { transition-delay: 220ms; }
+.motion-ready.motion-entered .system-node { transition-delay: 520ms; }
+.motion-ready.motion-entered .flow-line,
+.motion-ready.motion-entered .system-note { transition-delay: 630ms; }
 
 /* Hero system map */
 .system-map {
@@ -1878,6 +1973,280 @@ svg {
 }
 
 /* ------------------------------------------------------------
+   Résumé modal
+   ------------------------------------------------------------ */
+.resume-modal {
+  width: min(1180px, calc(100% - 48px));
+  height: min(900px, calc(100dvh - 48px));
+  max-width: none;
+  max-height: none;
+  padding: 0;
+  overflow: visible;
+  background: transparent;
+  border: 0;
+  color: var(--white);
+  opacity: 0;
+  transition: opacity 320ms ease;
+}
+
+.resume-modal::backdrop {
+  background: rgba(10, 11, 8, 0.3);
+  backdrop-filter: blur(0);
+  -webkit-backdrop-filter: blur(0);
+  transition: background-color 380ms ease, backdrop-filter 380ms ease, -webkit-backdrop-filter 380ms ease;
+}
+
+.resume-modal.is-visible {
+  opacity: 1;
+}
+
+.resume-modal.is-visible::backdrop {
+  background: rgba(10, 11, 8, 0.78);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.resume-modal-glow {
+  position: absolute;
+  inset: -70px;
+  pointer-events: none;
+  background: radial-gradient(circle at 12% 10%, rgba(230, 83, 39, 0.35), transparent 34%), radial-gradient(circle at 92% 82%, rgba(191, 218, 97, 0.17), transparent 28%);
+  opacity: 0;
+  transform: scale(0.88);
+  transition: opacity 700ms ease 120ms, transform 900ms var(--ease) 120ms;
+}
+
+.resume-modal.is-visible .resume-modal-glow {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.resume-modal-panel {
+  position: relative;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  overflow: hidden;
+  background: var(--dark);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 40px 120px rgba(0, 0, 0, 0.52);
+  opacity: 0;
+  transform: perspective(1200px) translate3d(0, 42px, 0) rotateX(2.5deg) scale(0.94);
+  transform-origin: center bottom;
+  transition: opacity 340ms ease, transform 620ms var(--ease);
+}
+
+.resume-modal.is-visible .resume-modal-panel {
+  opacity: 1;
+  transform: perspective(1200px) translate3d(0, 0, 0) rotateX(0) scale(1);
+}
+
+.resume-modal-header,
+.resume-modal-footer {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-inline: clamp(1rem, 2.5vw, 2rem);
+  background: var(--dark);
+}
+
+.resume-modal-header {
+  min-height: 84px;
+  border-bottom: 1px solid var(--line-dark);
+}
+
+.resume-modal-identity,
+.resume-modal-actions {
+  display: flex;
+  align-items: center;
+}
+
+.resume-modal-identity {
+  gap: clamp(1rem, 2vw, 2rem);
+}
+
+.resume-modal-index,
+.resume-modal-status,
+.resume-modal-footer {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.resume-modal-index {
+  color: var(--accent);
+}
+
+.resume-modal-identity h2,
+.resume-modal-identity p {
+  margin: 0;
+}
+
+.resume-modal-identity h2 {
+  font-size: 1.15rem;
+  letter-spacing: -0.035em;
+}
+
+.resume-modal-identity p {
+  margin-top: 0.15rem;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.7rem;
+}
+
+.resume-modal-actions {
+  gap: clamp(1rem, 2vw, 2rem);
+}
+
+.resume-modal-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--signal);
+}
+
+.resume-modal-status i {
+  width: 7px;
+  height: 7px;
+  background: var(--signal);
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(191, 218, 97, 0.1);
+}
+
+.resume-modal-close {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 auto;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: var(--white);
+  cursor: pointer;
+  transition: background-color 220ms ease, border-color 220ms ease, transform 260ms var(--ease);
+}
+
+.resume-modal-close:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: rotate(4deg);
+}
+
+.resume-modal-close span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 17px;
+  height: 1px;
+  background: currentColor;
+}
+
+.resume-modal-close span:first-child { transform: translate(-50%, -50%) rotate(45deg); }
+.resume-modal-close span:last-child { transform: translate(-50%, -50%) rotate(-45deg); }
+
+.resume-modal-body {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  background-image: radial-gradient(rgba(255, 255, 255, 0.09) 0.8px, transparent 0.8px);
+  background-size: 16px 16px;
+}
+
+.resume-modal-rail {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+  padding-block: 1.5rem;
+  border-right: 1px solid var(--line-dark);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+}
+
+.resume-modal-rail span {
+  color: var(--accent);
+  font-size: 0.58rem;
+}
+
+.resume-modal-rail i {
+  width: 1px;
+  flex: 1;
+  background: linear-gradient(var(--accent), rgba(255, 255, 255, 0.1), var(--signal));
+}
+
+.resume-modal-rail b {
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 0.5rem;
+  font-weight: 400;
+  line-height: 1.6;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+.resume-frame-shell {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  margin: clamp(0.8rem, 1.5vw, 1.3rem);
+  overflow: hidden;
+  background: var(--paper-bright);
+}
+
+.resume-frame-loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 0.9rem;
+  background: var(--paper-bright);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.resume-frame-loading span {
+  width: 34px;
+  height: 34px;
+  border: 2px solid var(--line);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: resume-spin 850ms linear infinite;
+}
+
+.resume-frame-loading p { margin: 0; }
+
+.resume-frame-shell iframe {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: var(--paper-bright);
+  border: 0;
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+.resume-frame-shell iframe.is-loaded { opacity: 1; }
+
+.resume-modal-footer {
+  min-height: 48px;
+  color: rgba(255, 255, 255, 0.42);
+  border-top: 1px solid var(--line-dark);
+}
+
+.resume-modal-footer span:last-child { color: var(--signal); }
+
+@keyframes resume-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ------------------------------------------------------------
    Responsive layout
    ------------------------------------------------------------ */
 @media (max-width: 1120px) {
@@ -2130,7 +2499,8 @@ svg {
     grid-template-columns: 1fr 1fr;
   }
 
-  .hero-meta > div:last-child {
+  .hero-meta > .meta-status,
+  .hero-meta > .visitor-stat {
     grid-column: 1 / -1;
     padding-top: 0.8rem;
     border-top: 1px solid var(--line);
@@ -2326,6 +2696,34 @@ svg {
 
   .credential-type {
     grid-column: 2;
+  }
+
+  .resume-modal {
+    width: calc(100% - 20px);
+    height: calc(100dvh - 20px);
+  }
+
+  .resume-modal-header {
+    min-height: 72px;
+  }
+
+  .resume-modal-index,
+  .resume-modal-status,
+  .resume-modal-rail,
+  .resume-modal-footer span:first-child {
+    display: none;
+  }
+
+  .resume-modal-body {
+    grid-template-columns: 1fr;
+  }
+
+  .resume-modal-identity p {
+    font-size: 0.61rem;
+  }
+
+  .resume-modal-footer {
+    justify-content: flex-end;
   }
 
   .contact-list a {
