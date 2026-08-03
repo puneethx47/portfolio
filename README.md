@@ -12,7 +12,7 @@ https://puneethx47.github.io/portfolio/
 
 ## Portfolio features
 
-- Animated in-page résumé quick-view modal backed by `assets/Puneeth_R_Resume.pdf`
+- Privacy-safe, in-page résumé viewer with no phone number or download control
 - Cross-platform animations with reduced-motion support and no animation-library CDN dependency
 - A shared visit counter that increments once per browser; local previews do not increment it
 

@@ -173,20 +173,32 @@
     });
   }
 
-  function setupResumeModal() {
+  function setupResumeViewer() {
     const modal = document.querySelector("[data-resume-modal]");
     const openers = [...document.querySelectorAll("[data-resume-open]")];
     const closeButton = modal?.querySelector("[data-resume-close]");
-    const frame = modal?.querySelector("[data-resume-frame]");
+    const zoomOut = modal?.querySelector("[data-resume-zoom-out]");
+    const zoomIn = modal?.querySelector("[data-resume-zoom-in]");
+    const zoomLabel = modal?.querySelector("[data-resume-zoom-label]");
+    const canvas = modal?.querySelector("[data-resume-canvas]");
 
-    if (!modal || !closeButton || !frame || typeof modal.showModal !== "function") return;
+    if (!modal || !closeButton || !zoomOut || !zoomIn || !zoomLabel || !canvas || typeof modal.showModal !== "function") return;
 
+    const zoomLevels = [75, 100, 125, 150];
+    let zoomIndex = window.innerWidth <= 680 ? 0 : 1;
     let returnFocus = null;
     let closeTimer = 0;
 
+    const applyZoom = () => {
+      const zoom = zoomLevels[zoomIndex];
+      canvas.dataset.zoom = String(zoom);
+      zoomLabel.textContent = `${zoom}%`;
+      zoomOut.disabled = zoomIndex === 0;
+      zoomIn.disabled = zoomIndex === zoomLevels.length - 1;
+    };
+
     const finishClose = () => {
       window.clearTimeout(closeTimer);
-      modal.classList.remove("is-closing");
       if (modal.open) modal.close();
       document.body.classList.remove("resume-open");
       returnFocus?.focus();
@@ -197,44 +209,41 @@
       if (!modal.open || modal.classList.contains("is-closing")) return;
       modal.classList.add("is-closing");
       modal.classList.remove("is-visible");
-      closeTimer = window.setTimeout(finishClose, reducedMotionQuery.matches ? 20 : 620);
+      closeTimer = window.setTimeout(finishClose, reducedMotionQuery.matches ? 20 : 520);
     };
 
     const openModal = (opener) => {
-      window.clearTimeout(closeTimer);
       returnFocus = opener;
-      if (!frame.getAttribute("src")) frame.src = frame.dataset.resumeSrc;
+      const menuToggle = document.querySelector("[data-menu-toggle]");
+      const menu = document.querySelector("[data-nav-menu]");
+      if (menuToggle?.getAttribute("aria-expanded") === "true") {
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute("aria-label", "Open navigation menu");
+        menu?.classList.remove("is-open");
+        document.body.classList.remove("menu-open");
+      }
+      zoomIndex = window.innerWidth <= 680 ? 0 : 1;
+      applyZoom();
+      modal.classList.remove("is-closing");
       if (!modal.open) modal.showModal();
       document.body.classList.add("resume-open");
-      window.requestAnimationFrame(() => {
-        window.requestAnimationFrame(() => modal.classList.add("is-visible"));
-      });
+      window.requestAnimationFrame(() => window.requestAnimationFrame(() => modal.classList.add("is-visible")));
       closeButton.focus();
     };
 
-    openers.forEach((opener) => opener.addEventListener("click", (event) => {
-      event.preventDefault();
-      openModal(opener);
-    }));
-
-    frame.addEventListener("load", () => frame.classList.add("is-loaded"));
+    openers.forEach((opener) => opener.addEventListener("click", () => openModal(opener)));
     closeButton.addEventListener("click", closeModal);
-    modal.addEventListener("click", (event) => {
-      if (event.target === modal) closeModal();
-    });
-    modal.addEventListener("cancel", (event) => {
-      event.preventDefault();
-      closeModal();
-    });
+    zoomOut.addEventListener("click", () => { if (zoomIndex > 0) { zoomIndex -= 1; applyZoom(); } });
+    zoomIn.addEventListener("click", () => { if (zoomIndex < zoomLevels.length - 1) { zoomIndex += 1; applyZoom(); } });
+    modal.addEventListener("click", (event) => { if (event.target === modal) closeModal(); });
+    modal.addEventListener("cancel", (event) => { event.preventDefault(); closeModal(); });
     document.addEventListener("keydown", (event) => {
       if (event.key !== "Escape" || !modal.open) return;
       event.preventDefault();
       closeModal();
     });
-    modal.addEventListener("close", () => {
-      modal.classList.remove("is-visible", "is-closing");
-      document.body.classList.remove("resume-open");
-    });
+    modal.addEventListener("close", () => modal.classList.remove("is-visible", "is-closing"));
+    applyZoom();
   }
 
   async function setupVisitorCount() {
@@ -242,17 +251,13 @@
     if (!output) return;
 
     const isLocalPreview = location.protocol === "file:" || ["localhost", "127.0.0.1", "::1"].includes(location.hostname);
-    if (isLocalPreview) {
-      output.textContent = "Live after publish";
-      output.classList.add("is-unavailable");
-      return;
+    const storageKey = "puneeth-portfolio-visitor-counted-v1";
+    let alreadyCounted = isLocalPreview;
+    if (!isLocalPreview) {
+      try { alreadyCounted = localStorage.getItem(storageKey) === "true"; } catch (_) { /* Storage can be disabled. */ }
     }
 
-    const storageKey = "puneeth-portfolio-visitor-counted-v1";
-    let alreadyCounted = false;
-    try { alreadyCounted = localStorage.getItem(storageKey) === "true"; } catch (_) { /* Storage can be disabled. */ }
-
-    const action = alreadyCounted ? "" : "/up";
+    const action = alreadyCounted ? "/" : "/up";
     const controller = new AbortController();
     const timeoutId = window.setTimeout(() => controller.abort(), 5000);
 
@@ -268,7 +273,7 @@
       if (!Number.isFinite(count)) throw new Error("Counter response did not include a number");
 
       output.textContent = new Intl.NumberFormat().format(count);
-      if (!alreadyCounted) {
+      if (!alreadyCounted && !isLocalPreview) {
         try { localStorage.setItem(storageKey, "true"); } catch (_) { /* The count still succeeded. */ }
       }
     } catch (error) {
@@ -327,7 +332,7 @@
   function init() {
     setupNavigation();
     setupCursor();
-    setupResumeModal();
+    setupResumeViewer();
     setupVisitorCount();
 
     try {
