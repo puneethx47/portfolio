@@ -251,37 +251,61 @@
     if (!output) return;
 
     const isLocalPreview = location.protocol === "file:" || ["localhost", "127.0.0.1", "::1"].includes(location.hostname);
-    const storageKey = "puneeth-portfolio-visitor-counted-v1";
-    let alreadyCounted = isLocalPreview;
-    if (!isLocalPreview) {
-      try { alreadyCounted = localStorage.getItem(storageKey) === "true"; } catch (_) { /* Storage can be disabled. */ }
-    }
+    const counterId = "puneethx47-portfolio-visits-v2";
+    const counterBaseUrl = "https://tick.rs";
+    const lastVisitKey = "puneeth-portfolio-last-visit-v2";
+    const cachedCountKey = "puneeth-portfolio-count-v2";
+    const visitWindowMs = 30 * 60 * 1000;
+    const formatCount = (count) => new Intl.NumberFormat().format(count);
 
-    const action = alreadyCounted ? "/" : "/up";
-    const controller = new AbortController();
-    const timeoutId = window.setTimeout(() => controller.abort(), 5000);
+    let lastVisitAt = 0;
+    let cachedCount = null;
+    try {
+      lastVisitAt = Number(localStorage.getItem(lastVisitKey)) || 0;
+      const storedCountValue = localStorage.getItem(cachedCountKey);
+      const storedCount = Number(storedCountValue);
+      if (storedCountValue !== null && Number.isFinite(storedCount) && storedCount >= 0) cachedCount = storedCount;
+    } catch (_) { /* Storage can be disabled without breaking the counter. */ }
+
+    if (cachedCount !== null) output.textContent = formatCount(cachedCount);
+
+    const shouldCountVisit = !isLocalPreview && Date.now() - lastVisitAt >= visitWindowMs;
+    const requestCount = async (increment) => {
+      const controller = new AbortController();
+      const timeoutId = window.setTimeout(() => controller.abort(), 6000);
+      const operation = increment ? "c+" : "c";
+
+      try {
+        const response = await fetch(`${counterBaseUrl}/${operation}/${counterId}.json`, {
+          mode: "cors",
+          cache: "no-store",
+          signal: controller.signal
+        });
+        if (!response.ok) throw new Error(`Counter returned ${response.status}`);
+        const data = await response.json();
+        const count = Number(typeof data === "object" ? data.count ?? data.value : data);
+        if (!Number.isFinite(count) || count < 0) throw new Error("Counter response did not include a valid number");
+        return count;
+      } finally {
+        window.clearTimeout(timeoutId);
+      }
+    };
 
     try {
-      const response = await fetch(`https://api.counterapi.dev/v1/puneethx47-portfolio/unique-visitors${action}`, {
-        mode: "cors",
-        cache: "no-store",
-        signal: controller.signal
-      });
-      if (!response.ok) throw new Error(`Counter returned ${response.status}`);
-      const data = await response.json();
-      const count = Number(data.count ?? data.value ?? data.data?.count ?? data.data?.value ?? data.Data?.count ?? data.Data?.value);
-      if (!Number.isFinite(count)) throw new Error("Counter response did not include a number");
+      const count = await requestCount(shouldCountVisit);
+      output.textContent = formatCount(count);
+      output.classList.remove("is-unavailable");
 
-      output.textContent = new Intl.NumberFormat().format(count);
-      if (!alreadyCounted && !isLocalPreview) {
-        try { localStorage.setItem(storageKey, "true"); } catch (_) { /* The count still succeeded. */ }
-      }
+      try {
+        localStorage.setItem(cachedCountKey, String(count));
+        if (shouldCountVisit) localStorage.setItem(lastVisitKey, String(Date.now()));
+      } catch (_) { /* The count still succeeded. */ }
     } catch (error) {
-      output.textContent = "Unavailable";
-      output.classList.add("is-unavailable");
+      if (cachedCount === null) {
+        output.textContent = "—";
+        output.classList.add("is-unavailable");
+      }
       console.warn("Visitor count could not be loaded.", error);
-    } finally {
-      window.clearTimeout(timeoutId);
     }
   }
 
