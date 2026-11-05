@@ -1481,6 +1481,164 @@ svg {
   color: var(--ink);
 }
 
+/* Banking service map */
+.banking-diagram {
+  min-width: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--dark);
+  color: var(--white);
+}
+
+.banking-diagram figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  min-height: 56px;
+  padding: 1.25rem;
+  border-bottom: 1px solid var(--line-dark);
+  color: rgba(255, 255, 255, 0.6);
+  font: 0.58rem var(--font-mono);
+  letter-spacing: 0.04em;
+}
+
+.banking-diagram figcaption span:first-child {
+  color: var(--signal);
+}
+
+.banking-stage {
+  flex: 1;
+  min-height: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem clamp(1rem, 3vw, 3rem);
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 0.8px, transparent 0.8px);
+  background-size: 16px 16px;
+}
+
+.banking-client {
+  display: grid;
+  justify-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.8rem;
+  color: rgba(255, 255, 255, 0.65);
+  font: 0.6rem var(--font-mono);
+  letter-spacing: 0.08em;
+}
+
+.banking-client span:last-child {
+  color: var(--signal);
+  font-size: 1.3rem;
+}
+
+.banking-gateway {
+  position: relative;
+  width: min(100%, 250px);
+  display: grid;
+  justify-items: center;
+  gap: 0.45rem;
+  padding: 1.4rem 1rem;
+  border: 1px solid var(--accent);
+  background: var(--dark-soft);
+}
+
+.banking-gateway small,
+.banking-gateway > span {
+  color: rgba(255, 255, 255, 0.65);
+  font: 0.56rem var(--font-mono);
+}
+
+.banking-gateway small {
+  color: var(--accent);
+  letter-spacing: 0.08em;
+}
+
+.banking-gateway strong {
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+}
+
+.banking-gateway::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  height: 1.5rem;
+  border-left: 1px solid var(--line-dark);
+}
+
+.banking-services {
+  position: relative;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+}
+
+.banking-services::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: calc((100% - 1rem) / 6);
+  right: calc((100% - 1rem) / 6);
+  border-top: 1px solid var(--line-dark);
+}
+
+.banking-service {
+  position: relative;
+  min-width: 0;
+  display: grid;
+  justify-items: center;
+  gap: 0.75rem;
+  padding: 1.2rem 0.25rem;
+  border: 1px solid var(--line-dark);
+  background: var(--dark-soft);
+  text-align: center;
+}
+
+.banking-service::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  height: 1.5rem;
+  border-left: 1px solid var(--line-dark);
+}
+
+.banking-service strong {
+  color: var(--signal);
+  font-size: clamp(0.75rem, 1.2vw, 0.95rem);
+  font-weight: 500;
+}
+
+.banking-service > span,
+.banking-service small {
+  color: rgba(255, 255, 255, 0.7);
+  font: 0.48rem var(--font-mono);
+}
+
+.banking-service small {
+  width: 100%;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--line-dark);
+  font-size: 0.43rem;
+}
+
+.banking-note {
+  max-width: 30ch;
+  margin: 2rem 0 0;
+  color: rgba(255, 255, 255, 0.6);
+  font: 0.58rem/1.8 var(--font-mono);
+  text-align: center;
+}
+
 /* Cache diagram */
 .cache-diagram {
   min-width: 0;

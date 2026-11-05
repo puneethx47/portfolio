@@ -300,6 +300,36 @@
           <p>Projects built to make architecture, concurrency, and service behavior tangible.</p>
         </div>
 
+        <article class="case-study case-study-banking" data-reveal>
+          <div class="case-copy">
+            <div class="case-eyebrow"><span>Banking service architecture</span><span class="status-chip status-neutral">Development project</span></div>
+            <h3>Banking Microservices</h3>
+            <p class="case-lede">Independent accounts, cards, and loans services built with Spring Boot, connected through a single API gateway and packaged for local development with Docker Compose.</p>
+            <dl class="case-facts case-facts-compact">
+              <div><dt>Architecture</dt><dd>Each service owns its business logic and data. A shared library keeps API response formats consistent.</dd></div>
+              <div><dt>Delivery</dt><dd>Spring Cloud Gateway routes requests to three REST APIs, each backed by its own in-memory H2 database.</dd></div>
+            </dl>
+            <div class="case-footer">
+              <div class="tech-row"><span>Java 21</span><span>Spring Boot</span><span>Docker</span></div>
+              <a class="project-link" href="https://github.com/puneethx47/banking-microservices" target="_blank" rel="noopener noreferrer" aria-label="Open the Banking Microservices private GitHub repository; access required">Private repository <span aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+
+          <figure class="banking-diagram" aria-labelledby="banking-diagram-title">
+            <figcaption id="banking-diagram-title"><span>BANKING / SERVICE MAP</span><span>Three services. One entry point.</span></figcaption>
+            <div class="banking-stage">
+              <div class="banking-client"><span>REST CLIENT</span><span aria-hidden="true">↓</span></div>
+              <div class="banking-gateway"><small>SPRING CLOUD</small><strong>API Gateway</strong><span>Routes by service prefix</span></div>
+              <div class="banking-services">
+                <div class="banking-service"><strong>Accounts</strong><span>/accounts/api</span><small>H2 · accountsdb</small></div>
+                <div class="banking-service"><strong>Cards</strong><span>/cards/api</span><small>H2 · cardsdb</small></div>
+                <div class="banking-service"><strong>Loans</strong><span>/loans/api</span><small>H2 · loansdb</small></div>
+              </div>
+              <p class="banking-note">Separate domains &amp; data · Shared response contracts</p>
+            </div>
+          </figure>
+        </article>
+
         <article class="case-study case-study-cache" data-reveal>
           <figure class="cache-diagram" aria-labelledby="cache-diagram-title">
             <figcaption id="cache-diagram-title"><span>CACHE / READ PATH</span><span>Thread-safe access with TTL expiry</span></figcaption>
