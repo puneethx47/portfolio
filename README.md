@@ -12,6 +12,7 @@ A personal portfolio presenting my software engineering experience, technical fo
 - Banking service and LRU cache architecture case studies.
 - Experience timeline and professional development.
 - An in-page résumé viewer with zoom controls and the phone number omitted.
+- A public PDF copy of the supplied résumé with the phone number removed from its text content.
 - Responsive navigation, keyboard-friendly controls, and reduced-motion support.
 - Native Web Animations API and Intersection Observer interactions.
 - A public visit count with a 30-minute revisit window and cached fallback.
@@ -42,6 +43,7 @@ Open `http://localhost:8000`. Localhost previews do not increment the public vis
 | [`styles.css`](styles.css) | Colors, typography, layout, responsive rules, and reduced-motion styling |
 | [`script.js`](script.js) | Navigation, animation, résumé controls, and visit counter |
 | [`assets/`](assets/) | Résumé preview and supporting credential assets |
+| [`assets/Puneeth_R_Resume_Public.pdf`](assets/Puneeth_R_Resume_Public.pdf) | Current public résumé PDF with the phone number removed |
 | [`og.png`](og.png) | Social sharing preview |
 | [`favicon.svg`](favicon.svg) | Site icon |
 
