@@ -9,11 +9,14 @@ A personal portfolio presenting my software engineering experience, technical fo
 ## Highlights
 
 - Java, Spring Boot, microservices, Kafka, and relational data expertise.
+- An experience-led overview of banking and lending workflows, aligned with the current résumé.
 - Banking service and LRU cache architecture case studies.
+- Expandable architecture diagrams on mobile, with public source and private learning projects clearly identified.
 - Experience timeline and professional development.
 - An in-page résumé viewer with zoom controls and the phone number omitted.
 - A public PDF copy of the supplied résumé with the phone number removed from its text content.
 - Responsive navigation, keyboard-friendly controls, and reduced-motion support.
+- A separate learning focus for Spring AI, RAG, and MCP.
 - Native Web Animations API and Intersection Observer interactions.
 - A public visit count with a 30-minute revisit window and cached fallback.
 

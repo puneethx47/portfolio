@@ -2,7 +2,6 @@
   "use strict";
 
   const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-  const finePointerQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
   const root = document.documentElement;
 
   function setupNavigation() {
@@ -69,6 +68,13 @@
     links.forEach((link) => link.addEventListener("click", () => setMenu(false)));
 
     document.addEventListener("keydown", (event) => {
+      if (event.key === "Tab" && toggle.getAttribute("aria-expanded") === "true") {
+        const controls = [toggle, ...menu.querySelectorAll("a, button:not([disabled])")];
+        const first = controls[0];
+        const last = controls[controls.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+      }
       if (event.key === "Escape" && toggle.getAttribute("aria-expanded") === "true") {
         setMenu(false, true);
       }
@@ -154,23 +160,6 @@
       });
       observeAnimation(document.querySelector(".cache-diagram"), cacheAnimation);
     }
-  }
-
-  function setupMagneticButtons() {
-    if (reducedMotionQuery.matches || !finePointerQuery.matches) return;
-
-    document.querySelectorAll(".magnetic").forEach((button) => {
-      button.addEventListener("pointermove", (event) => {
-        const bounds = button.getBoundingClientRect();
-        const x = (event.clientX - bounds.left - bounds.width / 2) * 0.14;
-        const y = (event.clientY - bounds.top - bounds.height / 2) * 0.18;
-        button.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-      });
-
-      button.addEventListener("pointerleave", () => {
-        button.style.transform = "";
-      });
-    });
   }
 
   function setupResumeViewer() {
@@ -309,59 +298,22 @@
     }
   }
 
-  function setupCursor() {
-    const cursor = document.querySelector("[data-cursor]");
-    if (!cursor || reducedMotionQuery.matches || !finePointerQuery.matches) return;
-
-    document.documentElement.classList.add("cursor-enabled");
-
-    let targetX = window.innerWidth / 2;
-    let targetY = window.innerHeight / 2;
-    let ringX = targetX;
-    let ringY = targetY;
-    let frameId = 0;
-
-    const render = () => {
-      ringX += (targetX - ringX) * 0.18;
-      ringY += (targetY - ringY) * 0.18;
-      cursor.style.setProperty("--cursor-x", `${targetX}px`);
-      cursor.style.setProperty("--cursor-y", `${targetY}px`);
-      cursor.style.setProperty("--ring-x", `${ringX}px`);
-      cursor.style.setProperty("--ring-y", `${ringY}px`);
-      frameId = window.requestAnimationFrame(render);
-    };
-
-    const setInteractiveState = (event) => {
-      const interactive = event.target.closest("a, button, [role='button'], input, textarea, select");
-      cursor.classList.toggle("is-interactive", Boolean(interactive));
-    };
-
-    window.addEventListener("pointermove", (event) => {
-      targetX = event.clientX;
-      targetY = event.clientY;
-      cursor.classList.add("is-visible");
-      setInteractiveState(event);
-    }, { passive: true });
-
-    document.addEventListener("pointerdown", () => cursor.classList.add("is-pressed"));
-    document.addEventListener("pointerup", () => cursor.classList.remove("is-pressed"));
-    document.documentElement.addEventListener("pointerleave", () => cursor.classList.remove("is-visible"));
-    document.documentElement.addEventListener("pointerenter", () => cursor.classList.add("is-visible"));
-    window.addEventListener("blur", () => cursor.classList.remove("is-visible"));
-
-    frameId = window.requestAnimationFrame(render);
-    window.addEventListener("pagehide", () => window.cancelAnimationFrame(frameId), { once: true });
+  function setupArchitecturePanels() {
+    const compact = window.matchMedia("(max-width: 680px)");
+    const panels = [...document.querySelectorAll("[data-architecture]")];
+    const update = () => panels.forEach((panel) => { panel.open = !compact.matches; });
+    update();
+    compact.addEventListener("change", update);
   }
 
   function init() {
     setupNavigation();
-    setupCursor();
+    setupArchitecturePanels();
     setupResumeViewer();
     setupVisitorCount();
 
     try {
       setupMotion();
-      setupMagneticButtons();
     } catch (error) {
       // Motion is progressive enhancement: the portfolio remains fully visible and usable.
       console.warn("Optional motion could not be initialized.", error);
