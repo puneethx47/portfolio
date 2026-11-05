@@ -235,7 +235,7 @@
           <article class="expertise-group" data-reveal>
             <div class="expertise-top"><span>05</span><h3>Platforms &amp; delivery</h3></div>
             <p>Container and pipeline fundamentals for repeatable application delivery.</p>
-            <ul><li>Docker</li><li>Kubernetes</li><li>Jenkins</li><li>CI/CD workflows</li><li>Git</li></ul>
+            <ul><li>Docker</li><li>Jenkins</li><li>CI/CD workflows</li><li>Git</li></ul>
           </article>
 
           <article class="expertise-group" data-reveal>
@@ -334,7 +334,7 @@
           <figure class="cache-diagram" aria-labelledby="cache-diagram-title">
             <figcaption id="cache-diagram-title"><span>CACHE / READ PATH</span><span>Thread-safe access with TTL expiry</span></figcaption>
             <div class="cache-stage">
-              <div class="cache-request"><span>GET /cache/:key</span><i aria-hidden="true">→</i></div>
+              <div class="cache-request"><span>Cache.get(key)</span><i aria-hidden="true">→</i></div>
               <div class="cache-core">
                 <div class="cache-ring" aria-hidden="true"><span></span></div>
                 <strong>LRU</strong><small>least recently used</small>
@@ -350,32 +350,32 @@
           <div class="case-copy">
             <div class="case-eyebrow"><span>Systems design study</span><span class="status-chip status-neutral">Learning project</span></div>
             <h3>LRU Cache with TTL</h3>
-            <p class="case-lede">A thread-safe least-recently-used cache with time-based expiry, exposed through a Spring Boot REST API and paired with an Angular interface.</p>
+            <p class="case-lede">A thread-safe Java cache with least-recently-used eviction, per-entry expiry, and Spring Boot endpoints for asynchronous workload measurement.</p>
             <dl class="case-facts case-facts-compact">
               <div><dt>Purpose</dt><dd>Explore concurrency, cache eviction, and expiration behavior through a working service.</dd></div>
-              <div><dt>Delivery</dt><dd>REST endpoints make cache behavior inspectable from the Angular client.</dd></div>
+              <div><dt>Delivery</dt><dd>Configurable workloads report throughput, cache hits and misses, and p50 / p95 / p99 latency.</dd></div>
             </dl>
             <div class="case-footer">
-              <div class="tech-row"><span>Spring Boot</span><span>Concurrency</span><span>Angular</span></div>
+              <div class="tech-row"><span>Spring Boot</span><span>Concurrency</span><span>Java</span></div>
               <a class="project-link" href="https://github.com/puneethx47/lru-cache" target="_blank" rel="noopener noreferrer" aria-label="View the LRU Cache with TTL source code on GitHub">View repository <span aria-hidden="true">↗</span></a>
             </div>
           </div>
         </article>
 
         <div class="supporting-projects" data-reveal>
-          <div class="supporting-heading"><p class="section-label">Frontend studies</p><p>Smaller interface projects exploring API consumption and responsive UI behavior.</p></div>
+          <div class="supporting-heading"><p class="section-label">Frontend studies</p><p>Smaller projects exploring API-driven interfaces and desktop UI behavior.</p></div>
 
-          <a class="supporting-project" href="https://github.com/puneethx47/whoa" target="_blank" rel="noopener noreferrer" aria-label="View the Keanu Reeves API Web Application source code on GitHub">
+          <a class="supporting-project" href="https://github.com/puneethx47/whoa" target="_blank" rel="noopener noreferrer" aria-label="Open the private Whoa project notes on GitHub; access required">
             <span class="supporting-number">01</span>
-            <span><strong>Keanu Reeves API Web Application</strong><small>JavaScript · REST client</small></span>
-            <p>Consumes REST data and organizes cinematic information into an interactive interface.</p>
+            <span><strong>Keanu Reeves API Web Application</strong><small>API interface study · Private project notes</small></span>
+            <p>Project notes and an original screenshot from a movie-focused API interface study.</p>
             <i aria-hidden="true">↗</i>
           </a>
 
           <a class="supporting-project" href="https://github.com/puneethx47/mac-basic-calculator" target="_blank" rel="noopener noreferrer" aria-label="View the macOS native-style calculator source code on GitHub">
             <span class="supporting-number">02</span>
-            <span><strong>macOS Native-Style Calculator</strong><small>CSS · responsive UI</small></span>
-            <p>A lightweight calculator focused on clear visual hierarchy and responsive behavior.</p>
+            <span><strong>macOS Native-Style Calculator</strong><small>Electron · JavaScript</small></span>
+            <p>A compact desktop calculator with basic arithmetic and a macOS-style interface.</p>
             <i aria-hidden="true">↗</i>
           </a>
         </div>
@@ -460,7 +460,7 @@
       <div class="resume-modal-stage" data-resume-stage>
         <div class="resume-modal-grid" aria-hidden="true"></div>
         <figure class="resume-image-canvas" data-resume-canvas data-zoom="100">
-          <img src="assets/Puneeth_R_Resume_No_Phone.webp" alt="Puneeth R résumé showing summary, technical skills, experience, certifications, and education; phone number omitted.">
+          <img src="assets/Puneeth_R_Resume_No_Phone.png" alt="Puneeth R résumé showing summary, technical skills, experience, certifications, and education; phone number omitted.">
         </figure>
       </div>
 
