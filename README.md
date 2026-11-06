@@ -11,6 +11,7 @@ A personal portfolio presenting my software engineering experience, technical fo
 - Java, Spring Boot, microservices, Kafka, and relational data expertise.
 - An experience-led overview of banking and lending workflows, aligned with the current résumé.
 - Banking service and LRU cache architecture case studies.
+- A separate AI Projects section featuring MCP Trading Simulator, Deep Research Assistant, and Browser Sidekick, with prototype maturity and private-source access clearly labeled.
 - Expandable architecture diagrams on mobile, with public source and private learning projects clearly identified.
 - Experience timeline and professional development.
 - An in-page résumé viewer with zoom controls and the phone number omitted.

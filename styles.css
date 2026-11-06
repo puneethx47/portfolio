@@ -1263,6 +1263,123 @@ svg {
   font-size: 0.59rem;
 }
 
+/* AI portfolio projects */
+.ai-projects {
+  background: var(--paper);
+  border-block: 1px solid var(--line);
+}
+
+.ai-project-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.2rem;
+}
+
+.ai-project-card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.4rem, 2.4vw, 2.2rem);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--ink);
+  background: var(--paper-bright);
+}
+
+.ai-project-featured {
+  border-top-color: var(--accent);
+}
+
+.ai-project-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .8rem;
+  font-family: var(--font-mono);
+  font-size: .61rem;
+}
+
+.ai-project-index {
+  color: var(--accent-dark);
+  letter-spacing: .08em;
+}
+
+.ai-project-card .ai-status-progress {
+  background: rgba(230, 83, 39, .08);
+  color: var(--accent-dark);
+}
+
+.ai-project-card h3 {
+  min-height: 2.4em;
+  margin: 1.8rem 0 1rem;
+  font-size: clamp(1.7rem, 2.6vw, 2.45rem);
+  font-weight: 600;
+  letter-spacing: -.05em;
+  line-height: 1.16;
+}
+
+.ai-project-summary {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: .93rem;
+  line-height: 1.75;
+}
+
+.ai-project-features {
+  margin: 1.5rem 0 2rem;
+  padding-left: 1.15rem;
+  color: var(--muted);
+  font-size: .82rem;
+  line-height: 1.8;
+}
+
+.ai-project-features li + li {
+  margin-top: .45rem;
+}
+
+.ai-project-features li::marker {
+  color: var(--accent-dark);
+}
+
+.ai-project-footer {
+  margin-top: auto;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--line);
+}
+
+.ai-project-footer .tech-row {
+  margin: 0 0 1rem;
+}
+
+.ai-project-footer .tech-row span {
+  border-color: var(--line);
+  color: var(--ink-soft);
+}
+
+.ai-project-footer .project-access {
+  margin: 0;
+  font-size: .7rem;
+  line-height: 1.65;
+}
+
+@media (min-width: 901px) and (max-width: 1120px) {
+  .nav-shell { gap: 1rem; }
+  .nav-links { gap: 1.25rem; }
+  .nav-menu { gap: 1.4rem; }
+  .nav-cta { padding-inline: .8rem; }
+}
+
+@media (max-width: 900px) {
+  .ai-project-grid { grid-template-columns: 1fr; }
+  .ai-project-card { padding: 2rem; }
+  .ai-project-card h3 { min-height: 0; font-size: 2.2rem; }
+}
+
+@media (max-width: 680px) {
+  .ai-project-card { padding: 1.5rem; }
+  .ai-project-card h3 { font-size: 2rem; }
+}
+
 /* ------------------------------------------------------------
    Project case studies
    ------------------------------------------------------------ */
@@ -2988,6 +3105,7 @@ svg {
   .expertise,
   .experience,
   .projects,
+  .ai-projects,
   .credentials,
   .contact {
     background: #fff !important;

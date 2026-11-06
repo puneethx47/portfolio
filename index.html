@@ -15,17 +15,17 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261105-polish">
+  <link rel="stylesheet" href="styles.css?v=20261107-ai-projects">
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="Puneeth R — Java Backend Engineer">
-  <meta property="og:description" content="Java backend engineering for banking and lending. Spring Boot, microservices, Kafka, and SQL. Exploring Spring AI, RAG, and MCP.">
+  <meta property="og:description" content="Java backend engineering for banking and lending. Spring Boot, microservices, Kafka, and SQL. Portfolio projects in AI agents and MCP, with Spring AI and RAG as ongoing learning areas.">
   <meta property="og:url" content="https://puneethx47.github.io/portfolio/">
   <meta property="og:image" content="https://puneethx47.github.io/portfolio/og.png">
   <meta property="og:image:alt" content="Puneeth R, Java Backend Engineer — banking APIs, Spring Boot, Kafka, and SQL">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Puneeth R — Java Backend Engineer">
-  <meta name="twitter:description" content="Java backend engineering for banking and lending. Spring Boot, microservices, Kafka, and SQL. Exploring Spring AI, RAG, and MCP.">
+  <meta name="twitter:description" content="Java backend engineering for banking and lending. Spring Boot, microservices, Kafka, and SQL. Portfolio projects in AI agents and MCP, with Spring AI and RAG as ongoing learning areas.">
   <meta name="twitter:image" content="https://puneethx47.github.io/portfolio/og.png">
 
   <script type="application/ld+json">
@@ -69,7 +69,8 @@
       <div class="nav-menu" id="nav-menu" data-nav-menu>
         <div class="nav-links">
           <a href="#experience" data-nav-link>Experience</a>
-          <a href="#projects" data-nav-link>Projects</a>
+          <a href="#projects" data-nav-link>Backend</a>
+          <a href="#ai-projects" data-nav-link>AI Projects</a>
           <a href="#skills" data-nav-link>Toolkit</a>
           <a href="#about" data-nav-link>About</a>
           <button class="nav-resume-trigger" type="button" data-resume-open>Résumé</button>
@@ -221,9 +222,9 @@
     <section class="section projects" id="projects" aria-labelledby="projects-title">
       <div class="section-shell">
         <div class="section-heading projects-heading" data-reveal>
-          <p class="section-label">02 / Selected work</p>
+          <p class="section-label">02 / Backend projects</p>
           <h2 id="projects-title">Architecture you can inspect.</h2>
-          <p>Focused development projects, with clear boundaries between public source and private learning work.</p>
+          <p>Backend projects exploring concurrency, service boundaries, and API design, with public source and private case studies clearly identified.</p>
         </div>
 
         <article class="case-study case-study-cache" data-reveal>
@@ -314,11 +315,77 @@
       </div>
     </section>
 
+    <section class="section ai-projects" id="ai-projects" aria-labelledby="ai-projects-title">
+      <div class="section-shell">
+        <div class="section-heading projects-heading" data-reveal>
+          <p class="section-label">03 / AI projects</p>
+          <h2 id="ai-projects-title">Agents with a purpose.</h2>
+          <p>Research, browser tools, and MCP integrations. Focused portfolio projects with their current scope clearly shown.</p>
+        </div>
+
+        <div class="ai-project-grid">
+          <article class="ai-project-card ai-project-featured" aria-labelledby="ai-trading-title" data-reveal>
+            <div class="ai-project-top">
+              <span class="ai-project-index">AI / 01</span>
+              <span class="status-chip">Local simulation verified</span>
+            </div>
+            <h3 id="ai-trading-title">MCP Trading Simulator</h3>
+            <p class="ai-project-summary">A trading simulation that brings account and market services together with a read-only API and two dashboard interfaces.</p>
+            <ul class="ai-project-features">
+              <li>Simulated balances, holdings, and transaction history</li>
+              <li>MCP services and a FastAPI backend</li>
+              <li>Dashboard access separate from agent execution</li>
+            </ul>
+            <div class="ai-project-footer">
+              <div class="tech-row"><span>Python</span><span>MCP</span><span>FastAPI</span><span>TypeScript</span></div>
+              <p class="project-access">Private source · local dashboard and API verified</p>
+            </div>
+          </article>
+
+          <article class="ai-project-card" aria-labelledby="ai-research-title" data-reveal>
+            <div class="ai-project-top">
+              <span class="ai-project-index">AI / 02</span>
+              <span class="status-chip status-neutral">Prototype</span>
+            </div>
+            <h3 id="ai-research-title">Deep Research Assistant</h3>
+            <p class="ai-project-summary">A multi-agent prototype designed to turn a research question into a search plan, source synthesis, and a structured report.</p>
+            <ul class="ai-project-features">
+              <li>Specialized planning, search, and writing agents</li>
+              <li>Gradio query and report interface</li>
+              <li>Structured research and Markdown output</li>
+            </ul>
+            <div class="ai-project-footer">
+              <div class="tech-row"><span>Python</span><span>OpenAI Agents SDK</span><span>Gradio</span></div>
+              <p class="project-access">Private source · end-to-end validation in progress</p>
+            </div>
+          </article>
+
+          <article class="ai-project-card" aria-labelledby="ai-sidekick-title" data-reveal>
+            <div class="ai-project-top">
+              <span class="ai-project-index">AI / 03</span>
+              <span class="status-chip ai-status-progress">In progress</span>
+            </div>
+            <h3 id="ai-sidekick-title">Browser Sidekick</h3>
+            <p class="ai-project-summary">An assistant designed to use browser tools, work through a task, and evaluate its results against user-defined success criteria.</p>
+            <ul class="ai-project-features">
+              <li>LangGraph state and conversation memory</li>
+              <li>Browser, file, and Python tools</li>
+              <li>Iterative evaluation and follow-up</li>
+            </ul>
+            <div class="ai-project-footer">
+              <div class="tech-row"><span>LangGraph</span><span>Playwright</span><span>Python</span></div>
+              <p class="project-access">Private source · browser-task verification in progress</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <section class="section expertise" id="skills" aria-labelledby="skills-title">
       <div class="section-shell">
         <div class="section-heading heading-split" data-reveal>
           <div>
-            <p class="section-label">03 / Toolkit</p>
+            <p class="section-label">04 / Toolkit</p>
             <h2 id="skills-title">A focused backend toolkit.</h2>
           </div>
           <p>The technologies I use to build APIs, connect services, and work with data.</p>
@@ -373,7 +440,7 @@
     <section class="section about" id="about" aria-labelledby="about-title">
       <div class="section-shell about-layout">
         <div class="about-statement" data-reveal>
-          <p class="section-label">04 / About</p>
+          <p class="section-label">05 / About</p>
           <h2 id="about-title">Engineering with context.</h2>
           <p>I'm Puneeth, a Java Backend Engineer based in Bengaluru. My work connects banking domain knowledge with clear APIs, reliable service communication, and thoughtful data design.</p>
           <p>Experience with Angular and delivery workflows helps me follow a feature from the interface through to its service, database, and release.</p>
@@ -390,7 +457,7 @@
     <section class="section credentials" id="credentials" aria-labelledby="credentials-title">
       <div class="section-shell credentials-layout">
         <div data-reveal>
-          <p class="section-label">05 / Continued learning</p>
+          <p class="section-label">06 / Continued learning</p>
           <h2 id="credentials-title">Continuous learning.</h2>
         </div>
         <article class="credential" data-reveal>
@@ -423,7 +490,7 @@
       <div class="contact-grid-pattern" aria-hidden="true"></div>
       <div class="section-shell contact-shell">
         <div class="contact-copy" data-reveal>
-          <p class="section-label">06 / Contact</p>
+          <p class="section-label">07 / Contact</p>
           <h2 id="contact-title">Let's talk<br><span>backend.</span></h2>
           <p>I'm open to Java backend engineering roles where banking domain knowledge, reliable APIs, and thoughtful systems design matter.</p>
           <a class="button button-accent magnetic" href="mailto:puneethr1954@gmail.com">Email Puneeth <span aria-hidden="true">↗</span></a>
