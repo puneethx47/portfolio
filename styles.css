@@ -82,6 +82,85 @@ svg {
   color: var(--white);
 }
 
+/* ------------------------------------------------------------
+   Pointer cursor
+   ------------------------------------------------------------ */
+.cursor {
+  display: none;
+}
+
+@media screen and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .cursor-enabled,
+  .cursor-enabled a,
+  .cursor-enabled button,
+  .cursor-enabled [role="button"] {
+    cursor: none;
+  }
+
+  .cursor {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: block;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 180ms ease;
+  }
+
+  .cursor.is-visible {
+    opacity: 1;
+  }
+
+  .cursor-dot,
+  .cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: block;
+    border-radius: 50%;
+    will-change: transform;
+  }
+
+  .cursor-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    box-shadow: 0 0 0 3px rgba(230, 83, 39, 0.12);
+    transform: translate3d(calc(var(--cursor-x) - 3px), calc(var(--cursor-y) - 3px), 0);
+    transition: width 220ms var(--ease), height 220ms var(--ease), background-color 220ms ease, transform 80ms linear;
+  }
+
+  .cursor-ring {
+    width: 34px;
+    height: 34px;
+    border: 1px solid rgba(230, 83, 39, 0.7);
+    transform: translate3d(calc(var(--ring-x) - 17px), calc(var(--ring-y) - 17px), 0);
+    transition: width 280ms var(--ease), height 280ms var(--ease), border-color 220ms ease, background-color 220ms ease, transform 80ms linear;
+  }
+
+  .cursor.is-interactive .cursor-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--white);
+    transform: translate3d(calc(var(--cursor-x) - 4px), calc(var(--cursor-y) - 4px), 0);
+  }
+
+  .cursor.is-interactive .cursor-ring {
+    width: 54px;
+    height: 54px;
+    background: rgba(230, 83, 39, 0.82);
+    border-color: transparent;
+    mix-blend-mode: difference;
+    transform: translate3d(calc(var(--ring-x) - 27px), calc(var(--ring-y) - 27px), 0);
+  }
+
+  .cursor.is-pressed .cursor-ring {
+    width: 27px;
+    height: 27px;
+    transform: translate3d(calc(var(--ring-x) - 13.5px), calc(var(--ring-y) - 13.5px), 0);
+  }
+}
+
 :focus-visible {
   outline: 3px solid var(--accent);
   outline-offset: 4px;

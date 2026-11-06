@@ -2,6 +2,7 @@
   "use strict";
 
   const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const finePointerQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
   const root = document.documentElement;
 
   function setupNavigation() {
@@ -306,6 +307,50 @@
     compact.addEventListener("change", update);
   }
 
+  function setupCursor() {
+    const cursor = document.querySelector("[data-cursor]");
+    if (!cursor || reducedMotionQuery.matches || !finePointerQuery.matches) return;
+
+    let targetX = window.innerWidth / 2;
+    let targetY = window.innerHeight / 2;
+    let ringX = targetX;
+    let ringY = targetY;
+    let frameId = 0;
+
+    const render = () => {
+      ringX += (targetX - ringX) * 0.18;
+      ringY += (targetY - ringY) * 0.18;
+      cursor.style.setProperty("--cursor-x", `${targetX}px`);
+      cursor.style.setProperty("--cursor-y", `${targetY}px`);
+      cursor.style.setProperty("--ring-x", `${ringX}px`);
+      cursor.style.setProperty("--ring-y", `${ringY}px`);
+      frameId = window.requestAnimationFrame(render);
+    };
+
+    const setInteractiveState = (event) => {
+      const interactive = event.target.closest("a, button, [role='button'], input, textarea, select");
+      cursor.classList.toggle("is-interactive", Boolean(interactive));
+    };
+
+    window.addEventListener("pointermove", (event) => {
+      if (event.pointerType !== "mouse") return;
+      root.classList.add("cursor-enabled");
+      targetX = event.clientX;
+      targetY = event.clientY;
+      cursor.classList.add("is-visible");
+      setInteractiveState(event);
+    }, { passive: true });
+
+    document.addEventListener("pointerdown", () => cursor.classList.add("is-pressed"));
+    document.addEventListener("pointerup", () => cursor.classList.remove("is-pressed"));
+    document.documentElement.addEventListener("pointerleave", () => cursor.classList.remove("is-visible"));
+    document.documentElement.addEventListener("pointerenter", () => cursor.classList.add("is-visible"));
+    window.addEventListener("blur", () => cursor.classList.remove("is-visible"));
+
+    frameId = window.requestAnimationFrame(render);
+    window.addEventListener("pagehide", () => window.cancelAnimationFrame(frameId), { once: true });
+  }
+
   function init() {
     setupNavigation();
     setupArchitecturePanels();
@@ -313,6 +358,7 @@
     setupVisitorCount();
 
     try {
+      setupCursor();
       setupMotion();
     } catch (error) {
       // Motion is progressive enhancement: the portfolio remains fully visible and usable.
